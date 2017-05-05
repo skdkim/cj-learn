@@ -78,6 +78,7 @@ public class InventoryTest {
 	    assertEquals(1, actual.size());
 	    assertEquals(item, actual.get(0).item);
 	    assertEquals(shouldHave - onHand, actual.get(0).quantity);
+
     }
     
     @Test
@@ -112,5 +113,37 @@ public class InventoryTest {
 //	    assertEquals(null, actualOrders.get(0));
 //	    assertEquals(0, actualOrders.get(0).quantity);
     }
-
+    
+    @Test
+    public void orderStockWithEqualInventory(){
+	    	// given
+    		int onHand = 10;
+    		int shouldHave = 10;
+    		
+    		Item item = new StockedItem(shouldHave);
+    		final InventoryDatabase db = new DatabaseTemplate() {
+    			@Override
+    			public int onHand(Item item){
+    				// TODO Auto-generate method stub
+    				return onHand;
+    			}
+    			
+    			@Override
+    			public List<Item> stockItems(){
+    				// TODO Auto-generate method stub
+    				return Collections.singletonList(item);
+    			}
+    		};
+    		
+    		final InventoryManager im = new AceInventoryManager(db);
+    		final LocalDate today = LocalDate.now();
+    	
+	    	// when
+	    	final List<Order> actualOrders = im.getOrders(today);
+    		
+	    	// then
+		    assertEquals(0, actualOrders.size());
+//		    assertEquals(item, actualOrders.get(0).item);
+//		    assertEquals(shouldHave - onHand, actualOrders.get(0).quantity);
+    }
 }
