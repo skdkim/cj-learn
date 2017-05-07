@@ -141,4 +141,43 @@ public class InventoryTest {
 	    	// then
 		    assertEquals(0, actualOrders.size());
     }
+    
+    @Test
+    public void orderEnoughMultipleStock(){
+        	// given
+    		int onHandA = 10;
+    		int onHandB = 12;
+    		int shouldHaveA = 16;
+    		int shouldHaveB = 20;
+    		
+    		Item itemA = new StockedItem(shouldHaveA);
+    		Item itemB = new StockedItem(shouldHaveB);
+    		final InventoryDatabase db = new DatabaseTemplate() {
+    			@Override
+    			public int onHand(Item item){
+    				// TODO Auto-generate method stub
+    				// Q: why is this returning onHandA?
+    				return onHandA;
+    			}
+    			
+    			@Override
+    			public List<Item> stockItems(){
+    				// TODO Auto-generate method stub
+    				return Collections.singletonList(itemA);
+    			}
+    		};
+    		
+    		// Note: db needs to be set up correctly with multiple orders in order to be fed correctly to the AceInventoryManager
+    		final InventoryManager im = new AceInventoryManager(db);
+    		final LocalDate today = LocalDate.now();
+    	
+        	// when
+        	final List<Order> actualOrders = im.getOrders(today);
+    		
+        	// then
+        assertEquals(1, actualOrders.size());
+        assertEquals(itemA, actualOrders.get(0).item);
+        assertEquals(shouldHaveA - onHandA, actualOrders.get(0).quantity);
+    }
 }
+
