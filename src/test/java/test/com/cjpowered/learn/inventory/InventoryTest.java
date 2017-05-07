@@ -78,7 +78,6 @@ public class InventoryTest {
 	    assertEquals(1, actual.size());
 	    assertEquals(item, actual.get(0).item);
 	    assertEquals(shouldHave - onHand, actual.get(0).quantity);
-
     }
     
     @Test
@@ -110,8 +109,6 @@ public class InventoryTest {
     		
 	    	// then
 	    assertEquals(0, actualOrders.size());
-//	    assertEquals(null, actualOrders.get(0));
-//	    assertEquals(0, actualOrders.get(0).quantity);
     }
     
     @Test
@@ -143,7 +140,5 @@ public class InventoryTest {
     		
 	    	// then
 		    assertEquals(0, actualOrders.size());
-//		    assertEquals(item, actualOrders.get(0).item);
-//		    assertEquals(shouldHave - onHand, actualOrders.get(0).quantity);
     }
 }
