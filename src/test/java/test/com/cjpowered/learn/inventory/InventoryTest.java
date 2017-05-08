@@ -3,6 +3,7 @@ package test.com.cjpowered.learn.inventory;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -156,18 +157,19 @@ public class InventoryTest {
     			@Override
     			public int onHand(Item item){
     				// TODO Auto-generate method stub
-    				// Q: why is this returning onHandA?
-    				return onHandA;
+    				return item == itemA ? onHandA : onHandB;
     			}
     			
     			@Override
     			public List<Item> stockItems(){
     				// TODO Auto-generate method stub
-    				return Collections.singletonList(itemA);
+    				List<Item> items = new ArrayList<Item>();
+    				items.add(itemA);
+    				items.add(itemB);
+    				return items;
     			}
     		};
     		
-    		// Note: db needs to be set up correctly with multiple orders in order to be fed correctly to the AceInventoryManager
     		final InventoryManager im = new AceInventoryManager(db);
     		final LocalDate today = LocalDate.now();
     	
@@ -175,9 +177,11 @@ public class InventoryTest {
         	final List<Order> actualOrders = im.getOrders(today);
     		
         	// then
-        assertEquals(1, actualOrders.size());
+        assertEquals(2, actualOrders.size());
         assertEquals(itemA, actualOrders.get(0).item);
+        assertEquals(itemB, actualOrders.get(1).item);
         assertEquals(shouldHaveA - onHandA, actualOrders.get(0).quantity);
+        assertEquals(shouldHaveB - onHandB, actualOrders.get(1).quantity);
     }
 }
 
