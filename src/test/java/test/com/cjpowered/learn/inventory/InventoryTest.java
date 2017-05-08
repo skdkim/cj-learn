@@ -143,6 +143,8 @@ public class InventoryTest {
 		    assertEquals(0, actualOrders.size());
     }
     
+    
+    
     @Test
     public void orderEnoughMultipleStock(){
         	// given
@@ -182,6 +184,45 @@ public class InventoryTest {
         assertEquals(itemB, actualOrders.get(1).item);
         assertEquals(shouldHaveA - onHandA, actualOrders.get(0).quantity);
         assertEquals(shouldHaveB - onHandB, actualOrders.get(1).quantity);
+    }
+    
+    @Test
+    public void orderEnoughMultipleStockWithOneSurplus(){
+        	// given
+    		int onHandA = 10;
+    		int onHandB = 12;
+    		int shouldHaveA = 8;
+    		int shouldHaveB = 20;
+    		
+    		Item itemA = new StockedItem(shouldHaveA);
+    		Item itemB = new StockedItem(shouldHaveB);
+    		final InventoryDatabase db = new DatabaseTemplate() {
+    			@Override
+    			public int onHand(Item item){
+    				// TODO Auto-generate method stub
+    				return item == itemA ? onHandA : onHandB;
+    			}
+    			
+    			@Override
+    			public List<Item> stockItems(){
+    				// TODO Auto-generate method stub
+    				List<Item> items = new ArrayList<Item>();
+    				items.add(itemA);
+    				items.add(itemB);
+    				return items;
+    			}
+    		};
+    		
+    		final InventoryManager im = new AceInventoryManager(db);
+    		final LocalDate today = LocalDate.now();
+    	
+        	// when
+        	final List<Order> actualOrders = im.getOrders(today);
+    		
+        	// then
+        assertEquals(1, actualOrders.size());
+        assertEquals(itemB, actualOrders.get(0).item);
+        assertEquals(shouldHaveB - onHandB, actualOrders.get(0).quantity);
     }
 }
 
