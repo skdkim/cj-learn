@@ -110,6 +110,7 @@ public class InventoryTest {
     		
 	    	// then
 	    assertEquals(0, actualOrders.size());
+	    assertTrue(actualOrders.isEmpty());
     }
     
     @Test
