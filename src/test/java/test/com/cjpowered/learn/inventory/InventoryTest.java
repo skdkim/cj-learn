@@ -27,7 +27,7 @@ import com.cjpowered.learn.marketing.Season;
 public class InventoryTest {
 
     @Test
-    public void whenNoStockItemsDoNotOrder() {
+    public void doNotRefillStockWhenNoOrders() {
     	// given
 		final InventoryDatabase db = new DatabaseTemplate() {
 			
@@ -65,7 +65,7 @@ public class InventoryTest {
     }
     
     @Test
-    public void orderEnoughStock(){
+    public void refillSingleStock(){
     	// given
 		int onHand = 10;
 		int shouldHave = 16;
@@ -113,7 +113,7 @@ public class InventoryTest {
     }
     
     @Test
-    public void orderStockWithSurplus(){
+    public void doNotRefillSingleStockOnSurplus(){
     	// given
 		int onHand = 16;
 		int shouldHave = 10;
@@ -160,7 +160,7 @@ public class InventoryTest {
     }
     
     @Test
-    public void orderStockWithEqualInventory(){
+    public void doNotRefillStockOnPerfectInventoryCount(){
     	// given
 		int onHand = 10;
 		int shouldHave = 10;
@@ -207,7 +207,7 @@ public class InventoryTest {
     }
     
     @Test
-    public void orderEnoughMultipleStock(){
+    public void refillMultipleStock(){
     	// given
 		int onHandA = 10;
 		int onHandB = 12;
@@ -263,7 +263,7 @@ public class InventoryTest {
     }
     
     @Test
-    public void orderEnoughMultipleStockWithOneSurplus(){
+    public void refillMultipleStockOneValidForRefill(){
     	// given
 		int onHandA = 10;
 		int onHandB = 12;
@@ -317,7 +317,7 @@ public class InventoryTest {
     }
     
     @Test(expected=IndexOutOfBoundsException.class)
-    public void orderEnoughMultipleStockWithOneSurplusError(){
+    public void doNotRefillInvalidStockOnMultipleOrder(){
     	// given
 		int onHandA = 10;
 		int onHandB = 12;
@@ -369,7 +369,7 @@ public class InventoryTest {
     }
     
     @Test
-    public void keepExtraStockForSale(){
+    public void refillSaleStock(){
     	// given
 		int onHand = 10;
 		int shouldHave = 15;
@@ -416,7 +416,7 @@ public class InventoryTest {
     }
     
     @Test
-    public void refillSaleStockOnSurplus(){
+    public void doNotRefillSaleStockWithPerfectInventory(){
     	// given
 		int onHand = 35;
 		int shouldHave = 15;
