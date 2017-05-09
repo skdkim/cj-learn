@@ -15,6 +15,8 @@ import com.cjpowered.learn.inventory.Item;
 import com.cjpowered.learn.inventory.Order;
 import com.cjpowered.learn.inventory.StockedItem;
 import com.cjpowered.learn.inventory.ace.AceInventoryManager;
+import com.cjpowered.learn.marketing.MarketingInfo;
+import com.cjpowered.learn.marketing.Season;
 
 /*
  * We need to keep items in stock to prevent back orders. See the README.md
@@ -37,8 +39,23 @@ public class InventoryTest {
 		};
     	
         final LocalDate today = LocalDate.now();
-        final InventoryManager im = new AceInventoryManager(db);
+		final MarketingInfo mrktInfo = new MarketingInfo(){
 
+			@Override
+			public boolean onSale(Item item) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		
         // when
         final List<Order> actualOrders = im.getOrders(today);
 
@@ -68,7 +85,22 @@ public class InventoryTest {
 			}
 		};
 		
-		final InventoryManager im = new AceInventoryManager(db);
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+
+			@Override
+			public boolean onSale(Item item) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
 		final LocalDate today = LocalDate.now();
 	
     	// when
@@ -101,7 +133,22 @@ public class InventoryTest {
 			}
 		};
 		
-		final InventoryManager im = new AceInventoryManager(db);
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+
+			@Override
+			public boolean onSale(Item item) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
 		final LocalDate today = LocalDate.now();
 	
     	// when
@@ -133,7 +180,22 @@ public class InventoryTest {
 			}
 		};
 		
-		final InventoryManager im = new AceInventoryManager(db);
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+
+			@Override
+			public boolean onSale(Item item) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
 		final LocalDate today = LocalDate.now();
 	
     	// when
@@ -171,7 +233,22 @@ public class InventoryTest {
 			}
 		};
 		
-		final InventoryManager im = new AceInventoryManager(db);
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+
+			@Override
+			public boolean onSale(Item item) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
 		final LocalDate today = LocalDate.now();
 	
     	// when
@@ -212,7 +289,22 @@ public class InventoryTest {
 			}
 		};
 		
-		final InventoryManager im = new AceInventoryManager(db);
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+
+			@Override
+			public boolean onSale(Item item) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
 		final LocalDate today = LocalDate.now();
 	
     	// when
@@ -251,7 +343,22 @@ public class InventoryTest {
 			}
 		};
 		
-		final InventoryManager im = new AceInventoryManager(db);
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+
+			@Override
+			public boolean onSale(Item item) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
 		final LocalDate today = LocalDate.now();
 	
     	// when
@@ -259,6 +366,53 @@ public class InventoryTest {
 		
     	// then
     	Item nonExistantItem = actualOrders.get(1).item;
+    }
+    
+    @Test
+    public void keepExtraStockForSale(){
+    	// given
+		int onHand = 10;
+		int shouldHave = 15;
+		
+		Item item = new StockedItem(shouldHave);
+		final InventoryDatabase db = new DatabaseTemplate() {
+			@Override
+			public int onHand(Item item){
+				// TODO Auto-generate method stub
+				return onHand;
+			}
+			
+			@Override
+			public List<Item> stockItems(){
+				// TODO Auto-generate method stub
+				return Collections.singletonList(item);
+			}
+		};
+		
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+
+			@Override
+			public boolean onSale(Item item) {
+				// TODO Auto-generated method stub
+				return true;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.now();
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(1, actualOrders.size());
+	    assertEquals(shouldHave - onHand + 20, actualOrders.get(0).quantity);
     }
 }
 
