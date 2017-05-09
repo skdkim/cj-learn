@@ -414,5 +414,51 @@ public class InventoryTest {
 	    assertEquals(1, actualOrders.size());
 	    assertEquals(shouldHave - onHand + 20, actualOrders.get(0).quantity);
     }
+    
+    @Test
+    public void refillSaleStockOnSurplus(){
+    	// given
+		int onHand = 35;
+		int shouldHave = 15;
+		
+		Item item = new StockedItem(shouldHave);
+		final InventoryDatabase db = new DatabaseTemplate() {
+			@Override
+			public int onHand(Item item){
+				// TODO Auto-generate method stub
+				return onHand;
+			}
+			
+			@Override
+			public List<Item> stockItems(){
+				// TODO Auto-generate method stub
+				return Collections.singletonList(item);
+			}
+		};
+		
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+
+			@Override
+			public boolean onSale(Item item) {
+				// TODO Auto-generated method stub
+				return true;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.now();
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(0, actualOrders.size());
+    }
 }
 
