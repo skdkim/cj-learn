@@ -23,13 +23,11 @@ public final class AceInventoryManager implements InventoryManager {
 	
      @Override
     public List<Order> getOrders(final LocalDate today) {
-    	 	// add logic seeing if item is on sale
     	 	final List<Order> orders = new ArrayList<>();
     	 	final List<Item> items = database.stockItems();
     	 	
     	 	for(Item item : items){
     	 		int onHand = database.onHand(item);
-//    	 		int toOrder = item.wantOnHand() - onHand;
     	 		int toOrder = marketInfo.onSale(item) ? item.wantOnHand() - onHand + 20 : item.wantOnHand() - onHand;
     	 		if (toOrder > 0){
         	 		final Order order = new Order(item, toOrder);
