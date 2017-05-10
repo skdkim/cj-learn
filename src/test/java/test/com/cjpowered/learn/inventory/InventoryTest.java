@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Test;
@@ -71,19 +72,24 @@ public class InventoryTest {
 		int shouldHave = 16;
 		
 		Item item = new StockedItem(shouldHave);
-		final InventoryDatabase db = new DatabaseTemplate() {
-			@Override
-			public int onHand(Item item){
-				// TODO Auto-generate method stub
-				return onHand;
-			}
-			
-			@Override
-			public List<Item> stockItems(){
-				// TODO Auto-generate method stub
-				return Collections.singletonList(item);
-			}
-		};
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(item, onHand);
+		final InventoryDatabase db = new FakeDatabase(store);
+		
+//		final InventoryDatabase db = new DatabaseTemplate() {
+//			@Override
+//			public int onHand(Item item){
+//				// TODO Auto-generate method stub
+//				return onHand;
+//			}
+//			
+//			@Override
+//			public List<Item> stockItems(){
+//				// TODO Auto-generate method stub
+//				return Collections.singletonList(item);
+//			}
+//		};
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 
