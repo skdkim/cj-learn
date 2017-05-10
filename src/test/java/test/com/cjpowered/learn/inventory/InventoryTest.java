@@ -71,7 +71,7 @@ public class InventoryTest {
 		int onHand = 10;
 		int shouldHave = 16;
 		
-		Item item = new StockedItem(shouldHave, Season.Summer);
+		Item item = new StockedItem(shouldHave);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
@@ -110,7 +110,7 @@ public class InventoryTest {
 		int onHand = 16;
 		int shouldHave = 10;
 		
-		Item item = new StockedItem(shouldHave, Season.Summer);
+		Item item = new StockedItem(shouldHave);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -157,7 +157,7 @@ public class InventoryTest {
 		int onHand = 10;
 		int shouldHave = 10;
 		
-		Item item = new StockedItem(shouldHave, Season.Summer);
+		Item item = new StockedItem(shouldHave);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -206,8 +206,8 @@ public class InventoryTest {
 		int shouldHaveA = 16;
 		int shouldHaveB = 20;
 		
-		Item itemA = new StockedItem(shouldHaveA, Season.Summer);
-		Item itemB = new StockedItem(shouldHaveB, Season.Summer);
+		Item itemA = new StockedItem(shouldHaveA);
+		Item itemB = new StockedItem(shouldHaveB);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -262,8 +262,8 @@ public class InventoryTest {
 		int shouldHaveA = 8;
 		int shouldHaveB = 20;
 		
-		Item itemA = new StockedItem(shouldHaveA, Season.Summer);
-		Item itemB = new StockedItem(shouldHaveB, Season.Summer);
+		Item itemA = new StockedItem(shouldHaveA);
+		Item itemB = new StockedItem(shouldHaveB);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -316,8 +316,8 @@ public class InventoryTest {
 		int shouldHaveA = 8;
 		int shouldHaveB = 20;
 		
-		Item itemA = new StockedItem(shouldHaveA, Season.Summer);
-		Item itemB = new StockedItem(shouldHaveB, Season.Summer);
+		Item itemA = new StockedItem(shouldHaveA);
+		Item itemB = new StockedItem(shouldHaveB);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -366,7 +366,7 @@ public class InventoryTest {
 		int onHand = 10;
 		int shouldHave = 15;
 		
-		Item item = new StockedItem(shouldHave, Season.Summer);
+		Item item = new StockedItem(shouldHave);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -413,7 +413,7 @@ public class InventoryTest {
 		int onHand = 35;
 		int shouldHave = 15;
 		
-		Item item = new StockedItem(shouldHave, Season.Summer);
+		Item item = new StockedItem(shouldHave);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -461,8 +461,8 @@ public class InventoryTest {
 		int shouldHaveA = 15;
 		int shouldHaveB = 15;
 		
-		Item itemA = new StockedItem(shouldHaveA, Season.Summer);
-		Item itemB = new StockedItem(shouldHaveB, Season.Summer);
+		Item itemA = new StockedItem(shouldHaveA);
+		Item itemB = new StockedItem(shouldHaveB);
 		
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
@@ -518,8 +518,8 @@ public class InventoryTest {
 		int shouldHaveA = 15;
 		int shouldHaveB = 18;
 		
-		Item itemA = new StockedItem(shouldHaveA, Season.Summer);
-		Item itemB = new StockedItem(shouldHaveB, Season.Summer);
+		Item itemA = new StockedItem(shouldHaveA);
+		Item itemB = new StockedItem(shouldHaveB);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -573,7 +573,7 @@ public class InventoryTest {
 		int shouldHave = 16;
 		final Season season = Season.Summer;
 		
-		Item item = new StockedItem(shouldHave, season);
+		Item item = new SeasonalItem(shouldHave, season);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
 		final InventoryDatabase db = new FakeDatabase(store);

@@ -1,32 +1,37 @@
-package com.cjpowered.learn.inventory;
+package test.com.cjpowered.learn.inventory;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
+import com.cjpowered.learn.inventory.InventoryDatabase;
+import com.cjpowered.learn.inventory.Item;
+import com.cjpowered.learn.inventory.Order;
 import com.cjpowered.learn.marketing.MarketingInfo;
+import com.cjpowered.learn.marketing.Season;
 
-public class StockedItem implements Item {
-	
+public class SeasonalItem implements Item{
+
 	private final int wantOnHand;
+	final Season season;
 	
-	public StockedItem(int wantOnHand){
+	public SeasonalItem(final int wantOnHand, final Season season){
 		this.wantOnHand = wantOnHand;
+		this.season = season;
 	}
 
 	@Override
 	public Optional<Order> createOrder(final LocalDate when, final InventoryDatabase db, final MarketingInfo marketInfo) {
 		// TODO Auto-generated method stub
 		final Optional<Order> maybeOrder;
-
+		
 		final int onHand = db.onHand(this);
 		final int toOrder;
-		final boolean onSale = marketInfo.onSale(this);
-		if (onSale){
-			toOrder = wantOnHand - onHand + 20;
+		final boolean inSeason = season.equals(marketInfo.season(when));
+		if (inSeason){
+			toOrder = wantOnHand * 2 - onHand;
 		} else {
 			toOrder = wantOnHand - onHand;
 		}
-		
 		if (toOrder > 0){
 			Order order = new Order(this, toOrder);
 			maybeOrder = Optional.of(order);

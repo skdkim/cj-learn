@@ -1,11 +1,10 @@
 package com.cjpowered.learn.inventory;
 
-import com.cjpowered.learn.marketing.Season;
+import java.time.LocalDate;
+import java.util.Optional;
+
+import com.cjpowered.learn.marketing.MarketingInfo;
 
 public interface Item {
-
-	int wantOnHand();
-	
-	Season season();
-
+	Optional<Order> createOrder(LocalDate when, InventoryDatabase db, MarketingInfo marketInfo);
 }
