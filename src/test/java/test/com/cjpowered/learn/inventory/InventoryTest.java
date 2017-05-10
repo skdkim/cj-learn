@@ -572,6 +572,54 @@ public class InventoryTest {
         assertEquals(itemB, actualOrders.get(1).item);
         assertEquals(shouldHaveA - onHandA + 20, actualOrders.get(0).quantity);
         assertEquals(shouldHaveB - onHandB, actualOrders.get(1).quantity);
-        }
+    }
+    
+    @Test
+    public void refillSingleSeasonalStock(){
+    	// given
+		int onHand = 10;
+		int shouldHave = 16;
+		
+		Item item = new StockedItem(shouldHave);
+		final InventoryDatabase db = new DatabaseTemplate() {
+			@Override
+			public int onHand(Item item){
+				// TODO Auto-generate method stub
+				return onHand;
+			}
+			
+			@Override
+			public List<Item> stockItems(){
+				// TODO Auto-generate method stub
+				return Collections.singletonList(item);
+			}
+		};
+		
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+
+			@Override
+			public boolean onSale(Item item) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.now();
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(1, actualOrders.size());
+	    assertEquals(item, actualOrders.get(0).item);
+	    assertEquals((shouldHave * 2) - onHand, actualOrders.get(0).quantity);
+    }
 }
 
