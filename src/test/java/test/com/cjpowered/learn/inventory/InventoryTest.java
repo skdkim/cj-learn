@@ -77,20 +77,6 @@ public class InventoryTest {
 		store.put(item, onHand);
 		final InventoryDatabase db = new FakeDatabase(store);
 		
-//		final InventoryDatabase db = new DatabaseTemplate() {
-//			@Override
-//			public int onHand(Item item){
-//				// TODO Auto-generate method stub
-//				return onHand;
-//			}
-//			
-//			@Override
-//			public List<Item> stockItems(){
-//				// TODO Auto-generate method stub
-//				return Collections.singletonList(item);
-//			}
-//		};
-		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 
 			@Override
