@@ -27,8 +27,18 @@ public final class AceInventoryManager implements InventoryManager {
     	 	final List<Item> items = database.stockItems();
     	 	
     	 	for(Item item : items){
-    	 		int onHand = database.onHand(item);
-    	 		int toOrder = marketInfo.onSale(item) ? item.wantOnHand() - onHand + 20 : item.wantOnHand() - onHand;
+    	 		final int onHand = database.onHand(item);
+    	 		final boolean onSale = marketInfo.onSale(item);
+    	 		final int toOrder;
+    	 		final boolean inSeason = marketInfo.season(today).equals(item.season());
+    	 		
+    	 		if (onSale){
+    	 			toOrder = item.wantOnHand() - onHand + 20;
+    	 		} else if(inSeason){
+    	 			toOrder = item.wantOnHand() * 2 - onHand;
+    	 		} else {
+    	 			toOrder = item.wantOnHand() - onHand;
+    	 		}
     	 		if (toOrder > 0){
         	 		final Order order = new Order(item, toOrder);
         	 		orders.add(order);
