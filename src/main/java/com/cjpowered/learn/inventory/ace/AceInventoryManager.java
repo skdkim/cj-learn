@@ -24,38 +24,15 @@ public final class AceInventoryManager implements InventoryManager {
 	
      @Override
     public List<Order> getOrders(final LocalDate today) {
-    	 	final List<Order> orders = new ArrayList<>();
-    	 	final List<Item> items = database.stockItems();
-    	 	
-    	 	for (Item item : items){
-//    	 		final Optional<Order> order = item.createOrder(today, database, marketInfo);
-    	 		final Order order = item.createOrder(today, database, marketInfo);
-    	 		if (order.quantity > 0){
-    	 			orders.add(order);
-    	 		}
-//    	 		order.quantity == 0 ? : orders.add(order);
-//    	 		orders.add(order);
-//    	 		order.ifPresent(orders.add(order));
-    	 	}
-    	 	
-//    	 	for(Item item : items){
-//    	 		final int onHand = database.onHand(item);
-//    	 		final boolean onSale = marketInfo.onSale(item);
-//    	 		final int toOrder;
-//    	 		final boolean inSeason = marketInfo.season(today).equals(item.season());
-//    	 		
-//    	 		if (onSale){
-//    	 			toOrder = item.wantOnHand() - onHand + 20;
-//    	 		} else if(inSeason){
-//    	 			toOrder = item.wantOnHand() * 2 - onHand;
-//    	 		} else {
-//    	 			toOrder = item.wantOnHand() - onHand;
-//    	 		}
-//    	 		if (toOrder > 0){
-//        	 		final Order order = new Order(item, toOrder);
-//        	 		orders.add(order);
-//    	 		}
-//    	 	}
-    	 	return orders;
+    	 final List<Order> orders = new ArrayList<>();
+    	 final List<Item> items = database.stockItems();
+    	 
+    	 for (Item item : items){
+    		 final Order order = item.createOrder(today, database, marketInfo);
+    		 if (order.quantity > 0){
+    			 orders.add(order);
+    		 }
+    	 }
+    	 return orders;
     }
 }

@@ -34,7 +34,6 @@ public class InventoryTest {
 			
 			@Override
 			public List<Item> stockItems(){
-				// TODO Auto-generate method stub
 				return Collections.emptyList();
 			}
 		};
@@ -44,13 +43,11 @@ public class InventoryTest {
 
 			@Override
 			public boolean onSale(Item item) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 
 			@Override
 			public Season season(LocalDate when) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 		};
@@ -81,13 +78,11 @@ public class InventoryTest {
 
 			@Override
 			public boolean onSale(Item item) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 
 			@Override
 			public Season season(LocalDate when) {
-				// TODO Auto-generated method stub
 				return Season.Spring;
 			}
 		};
@@ -114,13 +109,11 @@ public class InventoryTest {
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
-				// TODO Auto-generate method stub
 				return onHand;
 			}
 			
 			@Override
 			public List<Item> stockItems(){
-				// TODO Auto-generate method stub
 				return Collections.singletonList(item);
 			}
 		};
@@ -129,13 +122,11 @@ public class InventoryTest {
 
 			@Override
 			public boolean onSale(Item item) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 
 			@Override
 			public Season season(LocalDate when) {
-				// TODO Auto-generated method stub
 				return Season.Spring;
 			}
 		};
@@ -161,13 +152,11 @@ public class InventoryTest {
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
-				// TODO Auto-generate method stub
 				return onHand;
 			}
 			
 			@Override
 			public List<Item> stockItems(){
-				// TODO Auto-generate method stub
 				return Collections.singletonList(item);
 			}
 		};
@@ -176,13 +165,11 @@ public class InventoryTest {
 
 			@Override
 			public boolean onSale(Item item) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 
 			@Override
 			public Season season(LocalDate when) {
-				// TODO Auto-generated method stub
 				return Season.Spring;
 			}
 		};
@@ -211,13 +198,11 @@ public class InventoryTest {
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
-				// TODO Auto-generate method stub
 				return item == itemA ? onHandA : onHandB;
 			}
 			
 			@Override
 			public List<Item> stockItems(){
-				// TODO Auto-generate method stub
 				List<Item> items = new ArrayList<Item>();
 				items.add(itemA);
 				items.add(itemB);
@@ -229,13 +214,11 @@ public class InventoryTest {
 
 			@Override
 			public boolean onSale(Item item) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 
 			@Override
 			public Season season(LocalDate when) {
-				// TODO Auto-generated method stub
 				return Season.Spring;
 			}
 		};
@@ -267,13 +250,11 @@ public class InventoryTest {
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
-				// TODO Auto-generate method stub
 				return item == itemA ? onHandA : onHandB;
 			}
 			
 			@Override
 			public List<Item> stockItems(){
-				// TODO Auto-generate method stub
 				List<Item> items = new ArrayList<Item>();
 				items.add(itemA);
 				items.add(itemB);
@@ -285,13 +266,11 @@ public class InventoryTest {
 
 			@Override
 			public boolean onSale(Item item) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 
 			@Override
 			public Season season(LocalDate when) {
-				// TODO Auto-generated method stub
 				return Season.Spring;
 			}
 		};
@@ -321,13 +300,11 @@ public class InventoryTest {
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
-				// TODO Auto-generate method stub
 				return item == itemA ? onHandA : onHandB;
 			}
 			
 			@Override
 			public List<Item> stockItems(){
-				// TODO Auto-generate method stub
 				List<Item> items = new ArrayList<Item>();
 				items.add(itemA);
 				items.add(itemB);
@@ -339,13 +316,11 @@ public class InventoryTest {
 
 			@Override
 			public boolean onSale(Item item) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 
 			@Override
 			public Season season(LocalDate when) {
-				// TODO Auto-generated method stub
 				return Season.Spring;
 			}
 		};
@@ -370,13 +345,11 @@ public class InventoryTest {
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
-				// TODO Auto-generate method stub
 				return onHand;
 			}
 			
 			@Override
 			public List<Item> stockItems(){
-				// TODO Auto-generate method stub
 				return Collections.singletonList(item);
 			}
 		};
@@ -385,13 +358,11 @@ public class InventoryTest {
 
 			@Override
 			public boolean onSale(Item item) {
-				// TODO Auto-generated method stub
 				return true;
 			}
 
 			@Override
 			public Season season(LocalDate when) {
-				// TODO Auto-generated method stub
 				return Season.Spring;
 			}
 		};
@@ -417,13 +388,11 @@ public class InventoryTest {
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
-				// TODO Auto-generate method stub
 				return onHand;
 			}
 			
 			@Override
 			public List<Item> stockItems(){
-				// TODO Auto-generate method stub
 				return Collections.singletonList(item);
 			}
 		};
@@ -432,13 +401,11 @@ public class InventoryTest {
 
 			@Override
 			public boolean onSale(Item item) {
-				// TODO Auto-generated method stub
 				return true;
 			}
 
 			@Override
 			public Season season(LocalDate when) {
-				// TODO Auto-generated method stub
 				return Season.Spring;
 			}
 		};
@@ -467,13 +434,11 @@ public class InventoryTest {
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
-				// TODO Auto-generate method stub
 				return item == itemA ? onHandA : onHandB;
 			}
 			
 			@Override
 			public List<Item> stockItems(){
-				// TODO Auto-generate method stub
 				List<Item> items = new ArrayList<Item>();
 				items.add(itemA);
 				items.add(itemB);
@@ -485,13 +450,11 @@ public class InventoryTest {
 
 			@Override
 			public boolean onSale(Item item) {
-				// TODO Auto-generated method stub
 				return true;
 			}
 
 			@Override
 			public Season season(LocalDate when) {
-				// TODO Auto-generated method stub
 				return Season.Spring;
 			}
 		};
@@ -523,13 +486,11 @@ public class InventoryTest {
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
-				// TODO Auto-generate method stub
 				return item == itemA ? onHandA : onHandB;
 			}
 			
 			@Override
 			public List<Item> stockItems(){
-				// TODO Auto-generate method stub
 				List<Item> items = new ArrayList<Item>();
 				items.add(itemA);
 				items.add(itemB);
@@ -541,13 +502,11 @@ public class InventoryTest {
 
 			@Override
 			public boolean onSale(Item item) {
-				// TODO Auto-generated method stub
 				return item == itemA ? true : false;
 			}
 
 			@Override
 			public Season season(LocalDate when) {
-				// TODO Auto-generated method stub
 				return Season.Spring;
 			}
 		};
@@ -581,13 +540,11 @@ public class InventoryTest {
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
 			public boolean onSale(Item item) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 
 			@Override
 			public Season season(LocalDate when) {
-				// TODO Auto-generated method stub
 				return Season.Summer;
 			}
 		};
