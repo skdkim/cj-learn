@@ -28,9 +28,11 @@ public final class AceInventoryManager implements InventoryManager {
     	 	final List<Item> items = database.stockItems();
     	 	
     	 	for (Item item : items){
-    	 		final Optional<Order> order = item.createOrder(today, database, marketInfo);
-    	 		System.out.println(order);
+//    	 		final Optional<Order> order = item.createOrder(today, database, marketInfo);
+    	 		final Order order = item.createOrder(today, database, marketInfo);
+//    	 		System.out.println(order);
     	 		orders.add(order);
+//    	 		order.ifPresent(orders.add(order));
     	 	}
     	 	
 //    	 	for(Item item : items){
