@@ -14,9 +14,12 @@ public class StockedItem implements Item {
 	}
 
 	@Override
-	public Optional<Order> createOrder(final LocalDate when, final InventoryDatabase db, final MarketingInfo marketInfo) {
+//	public Optional<Order> createOrder(final LocalDate when, final InventoryDatabase db, final MarketingInfo marketInfo) {
+	public Order createOrder(final LocalDate when, final InventoryDatabase db, final MarketingInfo marketInfo) {
+
 		// TODO Auto-generated method stub
-		final Optional<Order> maybeOrder;
+//		final Optional<Order> maybeOrder;
+		final Order maybeOrder;
 
 		final int onHand = db.onHand(this);
 		final int toOrder;
@@ -26,13 +29,14 @@ public class StockedItem implements Item {
 		} else {
 			toOrder = wantOnHand - onHand;
 		}
-		
-		if (toOrder > 0){
-			Order order = new Order(this, toOrder);
-			maybeOrder = Optional.of(order);
-		} else {
-			maybeOrder = Optional.empty();
-		}
+
+		maybeOrder = new Order(this, toOrder);
+//		if (toOrder > 0){
+//			Order order = new Order(this, toOrder);
+//			maybeOrder = Optional.of(order);
+//		} else {
+//			maybeOrder = Optional.empty();
+//		}
 		return maybeOrder;
 	}
 }
