@@ -477,7 +477,7 @@ public class InventoryTest {
     }
     
     @Test
-    public void refillSaleAndRegularStock(){
+    public void refillMixStockSaleAndRegular(){
     	// given
 		int onHandA = 30;
 		int onHandB = 14;
