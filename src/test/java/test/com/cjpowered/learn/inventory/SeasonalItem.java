@@ -30,7 +30,7 @@ public class SeasonalItem implements Item{
 		if (inSeason && !onSale){
 			toOrder = wantOnHand * 2 - onHand;
 		} else if (inSeason && onSale){
-			toOrder = wantOnHand + 20 - onHand;
+			toOrder = wantOnHand < 20 ? wantOnHand + 20 - onHand : wantOnHand * 2 - onHand;
  		} else {
 			toOrder = wantOnHand - onHand;
 		}
