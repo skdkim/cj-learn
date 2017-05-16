@@ -1,12 +1,15 @@
 package test.com.cjpowered.learn.inventory;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -594,6 +597,51 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(0, actualOrders.size());
+    }
+    
+    @Test
+    public void refillMultipleSeasonalStock(){
+    	// given
+		int onHandA = 39;
+		int shouldHaveA = 20;
+		int onHandB = 21;
+		int shouldHaveB = 15;
+		final Season season = Season.Summer;
+		
+		Item itemA = new SeasonalItem(shouldHaveA, season);
+		Item itemB = new SeasonalItem(shouldHaveB, season);
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(itemA, onHandA);
+		store.put(itemB, onHandB);
+		final InventoryDatabase db = new FakeDatabase(store);
+		
+		final MarketingInfo mrktInfo = new MarketingTemplate(){
+			@Override
+			public boolean onSale(Item item) {
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Summer;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.now();
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(2, actualOrders.size());	    
+		
+		final Order expectedOrderA = new Order(itemA, (2 * 20) - 39);
+		final Order expectedOrderB = new Order(itemB, (2 * 15) - 21);
+		HashSet<Order> expected = new HashSet<>();
+		expected.add(expectedOrderA);
+		expected.add(expectedOrderB);
+		assertEquals(expected, new HashSet<>(actualOrders));
     }
 }
 
