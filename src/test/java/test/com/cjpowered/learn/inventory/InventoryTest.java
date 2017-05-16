@@ -909,5 +909,51 @@ public class InventoryTest {
 	    assertEquals(1, actualOrders.size());
 	    assertEquals(shouldHave - onHand, actualOrders.get(0).quantity);
     }
+    
+    @Test
+    public void refillMultipleDateRestrictedRegularStock(){
+    	// given
+		int onHandA = 22;
+		int onHandB = 10;
+		int shouldHaveA = 25;
+		int shouldHaveB = 15;
+		boolean isRestricted = true;
+		
+		Item itemA = new StockedItem(shouldHaveA, isRestricted);
+		Item itemB = new StockedItem(shouldHaveB, isRestricted);
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(itemA, onHandA);
+		store.put(itemB, onHandB);
+		final InventoryDatabase db = new FakeDatabase(store);
+		
+		final MarketingInfo mrktInfo = new MarketingTemplate(){
+			@Override
+			public boolean onSale(Item item) {
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Summer;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.of(2017, 1, 1);
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(2, actualOrders.size());
+	    
+		final Order expectedOrderA = new Order(itemA, shouldHaveA - onHandA);
+		final Order expectedOrderB = new Order(itemB, shouldHaveB - onHandB);
+		HashSet<Order> expected = new HashSet<>();
+		expected.add(expectedOrderA);
+		expected.add(expectedOrderB);
+		assertEquals(expected, new HashSet<>(actualOrders));
+    }
 }
 
