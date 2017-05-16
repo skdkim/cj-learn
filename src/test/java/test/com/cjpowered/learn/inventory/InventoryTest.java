@@ -70,8 +70,10 @@ public class InventoryTest {
     	// given
 		int onHand = 10;
 		int shouldHave = 16;
+		boolean isRestricted = false;
+
 		
-		Item item = new StockedItem(shouldHave);
+		Item item = new StockedItem(shouldHave, isRestricted);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
@@ -107,8 +109,10 @@ public class InventoryTest {
     	// given
 		int onHand = 16;
 		int shouldHave = 10;
+		boolean isRestricted = false;
+
 		
-		Item item = new StockedItem(shouldHave);
+		Item item = new StockedItem(shouldHave, isRestricted);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -150,8 +154,10 @@ public class InventoryTest {
     	// given
 		int onHand = 10;
 		int shouldHave = 10;
+		boolean isRestricted = false;
+
 		
-		Item item = new StockedItem(shouldHave);
+		Item item = new StockedItem(shouldHave, isRestricted);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -195,9 +201,11 @@ public class InventoryTest {
 		int onHandB = 12;
 		int shouldHaveA = 16;
 		int shouldHaveB = 20;
+		boolean isRestricted = false;
+
 		
-		Item itemA = new StockedItem(shouldHaveA);
-		Item itemB = new StockedItem(shouldHaveB);
+		Item itemA = new StockedItem(shouldHaveA, isRestricted);
+		Item itemB = new StockedItem(shouldHaveB, isRestricted);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -247,9 +255,11 @@ public class InventoryTest {
 		int onHandB = 12;
 		int shouldHaveA = 8;
 		int shouldHaveB = 20;
+		boolean isRestricted = false;
+
 		
-		Item itemA = new StockedItem(shouldHaveA);
-		Item itemB = new StockedItem(shouldHaveB);
+		Item itemA = new StockedItem(shouldHaveA, isRestricted);
+		Item itemB = new StockedItem(shouldHaveB, isRestricted);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -297,9 +307,11 @@ public class InventoryTest {
 		int onHandB = 12;
 		int shouldHaveA = 8;
 		int shouldHaveB = 20;
+		boolean isRestricted = false;
+
 		
-		Item itemA = new StockedItem(shouldHaveA);
-		Item itemB = new StockedItem(shouldHaveB);
+		Item itemA = new StockedItem(shouldHaveA, isRestricted);
+		Item itemB = new StockedItem(shouldHaveB, isRestricted);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -343,8 +355,10 @@ public class InventoryTest {
     	// given
 		int onHand = 10;
 		int shouldHave = 15;
+		boolean isRestricted = false;
+
 		
-		Item item = new StockedItem(shouldHave);
+		Item item = new StockedItem(shouldHave, isRestricted);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -386,8 +400,10 @@ public class InventoryTest {
     	// given
 		int onHand = 35;
 		int shouldHave = 15;
+		boolean isRestricted = false;
+
 		
-		Item item = new StockedItem(shouldHave);
+		Item item = new StockedItem(shouldHave, isRestricted);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -430,9 +446,11 @@ public class InventoryTest {
 		int onHandB = 34;
 		int shouldHaveA = 15;
 		int shouldHaveB = 15;
+		boolean isRestricted = false;
+
 		
-		Item itemA = new StockedItem(shouldHaveA);
-		Item itemB = new StockedItem(shouldHaveB);
+		Item itemA = new StockedItem(shouldHaveA, isRestricted);
+		Item itemB = new StockedItem(shouldHaveB, isRestricted);
 		
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
@@ -483,9 +501,11 @@ public class InventoryTest {
 		int onHandB = 14;
 		int shouldHaveA = 15;
 		int shouldHaveB = 18;
+		boolean isRestricted = false;
+
 		
-		Item itemA = new StockedItem(shouldHaveA);
-		Item itemB = new StockedItem(shouldHaveB);
+		Item itemA = new StockedItem(shouldHaveA, isRestricted);
+		Item itemB = new StockedItem(shouldHaveB, isRestricted);
 		final InventoryDatabase db = new DatabaseTemplate() {
 			@Override
 			public int onHand(Item item){
@@ -653,9 +673,11 @@ public class InventoryTest {
 		int shouldHaveB = 15;
 		final Season seasonA = Season.Summer;
 		final Season seasonB = Season.Spring;
+		boolean isRestricted = false;
+
 		
 		Item itemA = new SeasonalItem(shouldHaveA, seasonA);
-		Item itemB = new StockedItem(shouldHaveB);
+		Item itemB = new StockedItem(shouldHaveB, isRestricted);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
@@ -698,9 +720,11 @@ public class InventoryTest {
 		int onHandB = 10;
 		int shouldHaveB = 15;
 		final Season season = Season.Summer;
+		boolean isRestricted = false;
+
 		
 		Item itemA = new SeasonalItem(shouldHaveA, season);
-		Item itemB = new StockedItem(shouldHaveB);
+		Item itemB = new StockedItem(shouldHaveB, isRestricted);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
@@ -809,6 +833,43 @@ public class InventoryTest {
 	    assertEquals(1, actualOrders.size());	    
 	    assertEquals((shouldHave * 2) - onHand, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
+    }
+    
+    @Test
+    public void doNotRefillDateRestrictedRegularStock(){
+    	// given
+		int onHand = 22;
+		int shouldHave = 25;
+		boolean isRestricted = true;
+
+		final Season season = Season.Spring;
+		
+		Item item = new StockedItem(shouldHave, isRestricted);
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(item, onHand);
+		final InventoryDatabase db = new FakeDatabase(store);
+		
+		final MarketingInfo mrktInfo = new MarketingTemplate(){
+			@Override
+			public boolean onSale(Item item) {
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Summer;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.of(2017, 1, 2);
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(0, actualOrders.size());
     }
 }
 

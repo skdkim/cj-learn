@@ -8,9 +8,11 @@ import com.cjpowered.learn.marketing.MarketingInfo;
 public class StockedItem implements Item {
 	
 	private final int wantOnHand;
+	private final boolean isRestricted;
 	
-	public StockedItem(int wantOnHand){
+	public StockedItem(int wantOnHand, final boolean isRestricted){
 		this.wantOnHand = wantOnHand;
+		this.isRestricted = isRestricted;
 	}
 
 	@Override
@@ -20,6 +22,13 @@ public class StockedItem implements Item {
 		final int onHand = db.onHand(this);
 		final int toOrder;
 		final boolean onSale = marketInfo.onSale(this);
+		
+		if (isRestricted){
+			if(when.getDayOfMonth() != 1){
+				return new Order(this, 0);
+			}
+		}
+		
 		if (onSale){
 			toOrder = wantOnHand - onHand + 20;
 		} else {
