@@ -100,7 +100,7 @@ public class InventoryTest {
     }
     
     @Test
-    public void doNotRefillSingleStockOnSurplus(){
+    public void doNotRefillSingleStockSurplus(){
     	// given
 		int onHand = 16;
 		int shouldHave = 10;
@@ -143,7 +143,7 @@ public class InventoryTest {
     }
     
     @Test
-    public void doNotRefillStockOnPerfectInventoryCount(){
+    public void doNotRefillStockPerfectCount(){
     	// given
 		int onHand = 10;
 		int shouldHave = 10;
@@ -238,7 +238,7 @@ public class InventoryTest {
     }
     
     @Test
-    public void refillMultipleStockOneValidForRefill(){
+    public void refillMultipleStockOneOnly(){
     	// given
 		int onHandA = 10;
 		int onHandB = 12;
@@ -379,7 +379,7 @@ public class InventoryTest {
     }
     
     @Test
-    public void doNotRefillSaleStockWithPerfectInventory(){
+    public void doNotRefillSaleStockPerfectCount(){
     	// given
 		int onHand = 35;
 		int shouldHave = 15;
