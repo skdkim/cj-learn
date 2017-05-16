@@ -26,9 +26,12 @@ public class SeasonalItem implements Item{
 		final int onHand = db.onHand(this);
 		final int toOrder;
 		final boolean inSeason = season.equals(marketInfo.season(when));
-		if (inSeason){
+		final boolean onSale = marketInfo.onSale(this);
+		if (inSeason && !onSale){
 			toOrder = wantOnHand * 2 - onHand;
-		} else {
+		} else if (inSeason && onSale){
+			toOrder = wantOnHand + 20 - onHand;
+ 		} else {
 			toOrder = wantOnHand - onHand;
 		}
 		maybeOrder = new Order(this, toOrder);
