@@ -643,5 +643,51 @@ public class InventoryTest {
 		expected.add(expectedOrderB);
 		assertEquals(expected, new HashSet<>(actualOrders));
     }
+    
+    @Test
+    public void refillMixStockSeasonalAndRegular(){
+    	// given
+		int onHandA = 39;
+		int shouldHaveA = 20;
+		int onHandB = 10;
+		int shouldHaveB = 15;
+		final Season seasonA = Season.Summer;
+		final Season seasonB = Season.Spring;
+		
+		Item itemA = new SeasonalItem(shouldHaveA, seasonA);
+		Item itemB = new StockedItem(shouldHaveB);
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(itemA, onHandA);
+		store.put(itemB, onHandB);
+		final InventoryDatabase db = new FakeDatabase(store);
+		
+		final MarketingInfo mrktInfo = new MarketingTemplate(){
+			@Override
+			public boolean onSale(Item item) {
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Summer;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.now();
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(2, actualOrders.size());	    
+		
+		final Order expectedOrderA = new Order(itemA, (2 * 20) - 39);
+		final Order expectedOrderB = new Order(itemB, 15 - 10);
+		HashSet<Order> expected = new HashSet<>();
+		expected.add(expectedOrderA);
+		expected.add(expectedOrderB);
+		assertEquals(expected, new HashSet<>(actualOrders));
+    }
 }
 
