@@ -20,11 +20,10 @@ public class StockedItem implements Item {
 	@Override
 	public Order createOrder(final LocalDate when, final InventoryDatabase db, final MarketingInfo marketInfo) {
 		final Order maybeOrder;
-
 		final int onHand = db.onHand(this);
-		int toOrder = 0;
 		final int deficit;
 		final boolean onSale = marketInfo.onSale(this);
+		int toOrder = 0;
 		
 		if (isRestricted){
 			if(when.getDayOfMonth() != 1){

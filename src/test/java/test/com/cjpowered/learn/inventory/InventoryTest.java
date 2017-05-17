@@ -62,7 +62,6 @@ public class InventoryTest {
 
         // then
         assertTrue(actualOrders.isEmpty());
-
     }
     
     @Test
@@ -72,7 +71,6 @@ public class InventoryTest {
 		int shouldHave = 16;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-
 		
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
 		
@@ -112,7 +110,6 @@ public class InventoryTest {
 		int shouldHave = 10;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-
 		
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
 		final InventoryDatabase db = new DatabaseTemplate() {
@@ -158,7 +155,6 @@ public class InventoryTest {
 		int shouldHave = 10;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-
 		
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
 		final InventoryDatabase db = new DatabaseTemplate() {
@@ -174,7 +170,6 @@ public class InventoryTest {
 		};
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
-
 			@Override
 			public boolean onSale(Item item) {
 				return false;
@@ -206,8 +201,6 @@ public class InventoryTest {
 		int shouldHaveB = 20;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-
-
 		
 		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
@@ -227,7 +220,6 @@ public class InventoryTest {
 		};
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
-
 			@Override
 			public boolean onSale(Item item) {
 				return false;
@@ -262,7 +254,6 @@ public class InventoryTest {
 		int shouldHaveB = 20;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-
 		
 		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
@@ -282,7 +273,6 @@ public class InventoryTest {
 		};
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
-
 			@Override
 			public boolean onSale(Item item) {
 				return false;
@@ -315,7 +305,6 @@ public class InventoryTest {
 		int shouldHaveB = 20;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-
 		
 		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
@@ -335,7 +324,6 @@ public class InventoryTest {
 		};
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
-
 			@Override
 			public boolean onSale(Item item) {
 				return false;
@@ -364,7 +352,6 @@ public class InventoryTest {
 		int shouldHave = 15;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-
 		
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
 		final InventoryDatabase db = new DatabaseTemplate() {
@@ -380,7 +367,6 @@ public class InventoryTest {
 		};
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
-
 			@Override
 			public boolean onSale(Item item) {
 				return true;
@@ -425,7 +411,6 @@ public class InventoryTest {
 		};
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
-
 			@Override
 			public boolean onSale(Item item) {
 				return true;
@@ -456,7 +441,6 @@ public class InventoryTest {
 		int shouldHaveB = 15;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-
 		
 		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
@@ -477,7 +461,6 @@ public class InventoryTest {
 		};
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
-
 			@Override
 			public boolean onSale(Item item) {
 				return true;
@@ -512,7 +495,6 @@ public class InventoryTest {
 		int shouldHaveB = 18;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-
 		
 		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
@@ -532,7 +514,6 @@ public class InventoryTest {
 		};
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
-
 			@Override
 			public boolean onSale(Item item) {
 				return item == itemA ? true : false;
@@ -566,7 +547,6 @@ public class InventoryTest {
 		final Season season = Season.Summer;
 		final boolean isRestricted = false;
 		int bulkAmt = 1;
-
 		
 		Item item = new SeasonalItem(shouldHave, season, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
@@ -606,7 +586,6 @@ public class InventoryTest {
 		final Season season = Season.Summer;
 		final boolean isRestricted = false;
 		int bulkAmt = 1;
-
 		
 		Item item = new SeasonalItem(shouldHave, season, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
@@ -645,7 +624,6 @@ public class InventoryTest {
 		final Season season = Season.Summer;
 		final boolean isRestricted = false;
 		int bulkAmt = 1;
-
 		
 		Item itemA = new SeasonalItem(shouldHaveA, season, isRestricted, bulkAmt);
 		Item itemB = new SeasonalItem(shouldHaveB, season, isRestricted, bulkAmt);
@@ -693,7 +671,6 @@ public class InventoryTest {
 		final Season seasonA = Season.Summer;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-
 		
 		Item itemA = new SeasonalItem(shouldHaveA, seasonA, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
@@ -741,7 +718,6 @@ public class InventoryTest {
 		final Season season = Season.Summer;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-
 		
 		Item itemA = new SeasonalItem(shouldHaveA, season, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
@@ -787,7 +763,6 @@ public class InventoryTest {
 		final boolean isRestricted = false;
 		final Season season = Season.Summer;
 		int bulkAmt = 1;
-
 		
 		Item item = new SeasonalItem(shouldHave, season, isRestricted, bulkAmt);
 		
@@ -1144,7 +1119,6 @@ public class InventoryTest {
 				
 		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmtA);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmtB);
-
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);

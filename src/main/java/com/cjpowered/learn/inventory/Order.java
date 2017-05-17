@@ -29,12 +29,10 @@ public final class Order {
         else if (obj instanceof Order)
             return this.item.equals(((Order) obj).item) && this.quantity == ((Order) obj).quantity;
         return false;
-
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(this.item, this.quantity);
     }
-
 }

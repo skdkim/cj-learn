@@ -24,5 +24,4 @@ public interface MarketingInfo {
      * @return fetched value
      */
     Season season(LocalDate when);
-
 }

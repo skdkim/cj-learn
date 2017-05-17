@@ -22,7 +22,7 @@ public final class AceInventoryManager implements InventoryManager {
 		this.marketInfo = marketInfo;
 	}
 	
-     @Override
+    @Override
     public List<Order> getOrders(final LocalDate today) {
     	 final List<Order> orders = new ArrayList<>();
     	 final List<Item> items = database.stockItems();

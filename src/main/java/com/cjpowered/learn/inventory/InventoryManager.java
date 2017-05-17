@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface InventoryManager {
-
     /**
      * Compute inventory orders
      *
@@ -14,5 +13,4 @@ public interface InventoryManager {
      * @return list of items and quantities to order
      */
     List<Order> getOrders(LocalDate today);
-
 }

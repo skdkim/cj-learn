@@ -3,7 +3,6 @@ package com.cjpowered.learn.inventory;
 import java.util.List;
 
 public interface InventoryDatabase {
-
     /**
      * Fetch number on-hand.
      *
@@ -20,5 +19,4 @@ public interface InventoryDatabase {
      * @return fetched value
      */
     List<Item> stockItems();
-
 }

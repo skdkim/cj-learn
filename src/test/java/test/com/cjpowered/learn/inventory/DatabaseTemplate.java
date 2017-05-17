@@ -16,5 +16,4 @@ public class DatabaseTemplate implements InventoryDatabase {
     public List<Item> stockItems() {
         throw new UnsupportedOperationException("Not yet implemented");
     }
-
 }

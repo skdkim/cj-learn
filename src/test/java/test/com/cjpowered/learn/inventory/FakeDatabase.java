@@ -27,5 +27,4 @@ public class FakeDatabase implements InventoryDatabase{
 		final Set<Item> keys = dataStore.keySet();
 		return new ArrayList<>(keys);
 	}
-
 }

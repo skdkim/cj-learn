@@ -17,5 +17,4 @@ public class MarketingTemplate implements MarketingInfo {
     public Season season(final LocalDate when) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
-
 }
