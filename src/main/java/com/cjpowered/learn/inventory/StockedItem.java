@@ -9,10 +9,12 @@ public class StockedItem implements Item {
 	
 	private final int wantOnHand;
 	private final boolean isRestricted;
+	private final int bulkAmt;
 	
-	public StockedItem(int wantOnHand, final boolean isRestricted){
+	public StockedItem(int wantOnHand, final boolean isRestricted, final int bulkAmt){
 		this.wantOnHand = wantOnHand;
 		this.isRestricted = isRestricted;
+		this.bulkAmt = bulkAmt;
 	}
 
 	@Override
@@ -20,7 +22,8 @@ public class StockedItem implements Item {
 		final Order maybeOrder;
 
 		final int onHand = db.onHand(this);
-		final int toOrder;
+		int toOrder = 0;
+		final int deficit = wantOnHand - onHand;
 		final boolean onSale = marketInfo.onSale(this);
 		
 		if (isRestricted){
@@ -32,7 +35,10 @@ public class StockedItem implements Item {
 		if (onSale){
 			toOrder = wantOnHand - onHand + 20;
 		} else {
-			toOrder = wantOnHand - onHand;
+			// work in here for bulk amt
+			while(toOrder < deficit){
+				toOrder += bulkAmt;
+			}
 		}
 
 		maybeOrder = new Order(this, toOrder);
