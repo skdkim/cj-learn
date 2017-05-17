@@ -23,7 +23,7 @@ public class StockedItem implements Item {
 
 		final int onHand = db.onHand(this);
 		int toOrder = 0;
-		final int deficit = wantOnHand - onHand;
+		 int deficit = wantOnHand - onHand;
 		final boolean onSale = marketInfo.onSale(this);
 		
 		if (isRestricted){
@@ -33,7 +33,10 @@ public class StockedItem implements Item {
 		}
 		
 		if (onSale){
-			toOrder = wantOnHand - onHand + 20;
+			deficit = wantOnHand + 20 - onHand;
+			while(toOrder < deficit){
+				toOrder += bulkAmt;
+			}
 		} else {
 			// work in here for bulk amt
 			while(toOrder < deficit){
