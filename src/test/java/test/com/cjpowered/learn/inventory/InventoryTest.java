@@ -1031,5 +1031,44 @@ public class InventoryTest {
     	// then
 	    assertEquals(0, actualOrders.size());
     }
+    
+    @Test
+    public void refillDateRestrictedSeasonalStock(){
+    	// given
+		int onHand = 5;
+		int shouldHave = 10;
+		boolean isRestricted = true;
+		
+		final Season season = Season.Summer;
+		
+		Item item = new SeasonalItem(shouldHave, season, isRestricted);
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(item, onHand);
+		final InventoryDatabase db = new FakeDatabase(store);
+		
+		final MarketingInfo mrktInfo = new MarketingTemplate(){
+			@Override
+			public boolean onSale(Item item) {
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Summer;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.of(2017, 1, 1);
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(1, actualOrders.size());
+	    assertEquals(shouldHave * 2 - onHand, actualOrders.get(0).quantity);
+	    assertEquals(item, actualOrders.get(0).item);
+    }
 }
 
