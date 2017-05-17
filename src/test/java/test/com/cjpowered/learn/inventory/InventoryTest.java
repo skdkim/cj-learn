@@ -1132,6 +1132,55 @@ public class InventoryTest {
     }
     
     @Test
+    public void refillMultipleBulkStock(){
+    	// given
+		int onHandA = 3;
+		int shouldHaveA = 10;
+		int onHandB = 5;
+		int shouldHaveB = 10;
+		boolean isRestricted = false;
+		int bulkAmtA = 4;
+		int bulkAmtB = 3;
+				
+		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmtA);
+		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmtB);
+
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(itemA, onHandA);
+		store.put(itemB, onHandB);
+		final InventoryDatabase db = new FakeDatabase(store);
+		
+		final MarketingInfo mrktInfo = new MarketingTemplate(){
+			@Override
+			public boolean onSale(Item item) {
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Summer;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.of(2017, 1, 1);
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(2, actualOrders.size());
+	    
+		final Order expectedOrderA = new Order(itemA, 8);
+		final Order expectedOrderB = new Order(itemB, 6);
+		HashSet<Order> expected = new HashSet<>();
+		expected.add(expectedOrderA);
+		expected.add(expectedOrderB);
+		assertEquals(expected, new HashSet<>(actualOrders));
+    }
+    
+    @Test
     public void refillBulkSaleStock(){
     	// given
 		int onHand = 3;
