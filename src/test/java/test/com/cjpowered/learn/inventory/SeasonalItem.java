@@ -13,10 +13,12 @@ public class SeasonalItem implements Item{
 
 	private final int wantOnHand;
 	final Season season;
+	private final boolean isRestricted;
 	
-	public SeasonalItem(final int wantOnHand, final Season season){
+	public SeasonalItem(final int wantOnHand, final Season season, final boolean isRestricted){
 		this.wantOnHand = wantOnHand;
 		this.season = season;
+		this.isRestricted = isRestricted;
 	}
 
 	@Override
@@ -27,6 +29,13 @@ public class SeasonalItem implements Item{
 		final int toOrder;
 		final boolean inSeason = season.equals(marketInfo.season(when));
 		final boolean onSale = marketInfo.onSale(this);
+		
+		if (isRestricted){
+			if(when.getDayOfMonth() != 1){
+				return new Order(this, 0);
+			}
+		}
+		
 		if (inSeason && !onSale){
 			toOrder = wantOnHand * 2 - onHand;
 		} else if (inSeason && onSale){

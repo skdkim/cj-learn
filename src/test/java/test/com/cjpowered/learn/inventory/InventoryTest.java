@@ -554,8 +554,9 @@ public class InventoryTest {
 		int onHand = 10;
 		int shouldHave = 16;
 		final Season season = Season.Summer;
+		final boolean isRestricted = false;
 		
-		Item item = new SeasonalItem(shouldHave, season);
+		Item item = new SeasonalItem(shouldHave, season, isRestricted);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
 		final InventoryDatabase db = new FakeDatabase(store);
@@ -591,8 +592,9 @@ public class InventoryTest {
 		int onHand = 40;
 		int shouldHave = 20;
 		final Season season = Season.Summer;
+		final boolean isRestricted = false;
 		
-		Item item = new SeasonalItem(shouldHave, season);
+		Item item = new SeasonalItem(shouldHave, season, isRestricted);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
 		final InventoryDatabase db = new FakeDatabase(store);
@@ -627,9 +629,10 @@ public class InventoryTest {
 		int onHandB = 21;
 		int shouldHaveB = 15;
 		final Season season = Season.Summer;
+		final boolean isRestricted = false;
 		
-		Item itemA = new SeasonalItem(shouldHaveA, season);
-		Item itemB = new SeasonalItem(shouldHaveB, season);
+		Item itemA = new SeasonalItem(shouldHaveA, season, isRestricted);
+		Item itemB = new SeasonalItem(shouldHaveB, season, isRestricted);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
@@ -676,7 +679,7 @@ public class InventoryTest {
 		boolean isRestricted = false;
 
 		
-		Item itemA = new SeasonalItem(shouldHaveA, seasonA);
+		Item itemA = new SeasonalItem(shouldHaveA, seasonA, isRestricted);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
@@ -723,7 +726,7 @@ public class InventoryTest {
 		boolean isRestricted = false;
 
 		
-		Item itemA = new SeasonalItem(shouldHaveA, season);
+		Item itemA = new SeasonalItem(shouldHaveA, season, isRestricted);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
@@ -764,10 +767,10 @@ public class InventoryTest {
     	// given
 		int onHand = 5;
 		int shouldHave = 6;
-
+		final boolean isRestricted = false;
 		final Season season = Season.Summer;
 		
-		Item item = new SeasonalItem(shouldHave, season);
+		Item item = new SeasonalItem(shouldHave, season, isRestricted);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
@@ -802,10 +805,10 @@ public class InventoryTest {
     	// given
 		int onHand = 22;
 		int shouldHave = 25;
-
+		final boolean isRestricted = false;
 		final Season season = Season.Summer;
 		
-		Item item = new SeasonalItem(shouldHave, season);
+		Item item = new SeasonalItem(shouldHave, season, isRestricted);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
@@ -990,6 +993,43 @@ public class InventoryTest {
     	// then
 	    assertEquals(1, actualOrders.size());
 	    assertEquals(shouldHave + 20 - onHand, actualOrders.get(0).quantity);
+    }
+    
+    @Test
+    public void doNotRefillDateRestrictedSeasonalStock(){
+    	// given
+		int onHand = 5;
+		int shouldHave = 10;
+		boolean isRestricted = true;
+		
+		final Season season = Season.Summer;
+		
+		Item item = new SeasonalItem(shouldHave, season, isRestricted);
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(item, onHand);
+		final InventoryDatabase db = new FakeDatabase(store);
+		
+		final MarketingInfo mrktInfo = new MarketingTemplate(){
+			@Override
+			public boolean onSale(Item item) {
+				return true;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Summer;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.of(2017, 1, 2);
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(0, actualOrders.size());
     }
 }
 
