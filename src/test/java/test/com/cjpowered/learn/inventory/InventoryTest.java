@@ -675,7 +675,6 @@ public class InventoryTest {
 		int onHandB = 10;
 		int shouldHaveB = 15;
 		final Season seasonA = Season.Summer;
-		final Season seasonB = Season.Spring;
 		boolean isRestricted = false;
 
 		
@@ -844,8 +843,6 @@ public class InventoryTest {
 		int onHand = 22;
 		int shouldHave = 25;
 		boolean isRestricted = true;
-
-		final Season season = Season.Spring;
 		
 		Item item = new StockedItem(shouldHave, isRestricted);
 		
@@ -881,8 +878,6 @@ public class InventoryTest {
 		int onHand = 22;
 		int shouldHave = 25;
 		boolean isRestricted = true;
-
-		final Season season = Season.Spring;
 		
 		Item item = new StockedItem(shouldHave, isRestricted);
 		
