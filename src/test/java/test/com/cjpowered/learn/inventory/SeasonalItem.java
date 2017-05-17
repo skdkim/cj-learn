@@ -47,7 +47,10 @@ public class SeasonalItem implements Item{
 				toOrder += bulkAmt;
 			}
 		} else if (inSeason && onSale){
-			toOrder = wantOnHand < 20 ? wantOnHand + 20 - onHand : wantOnHand * 2 - onHand;
+			deficit = wantOnHand < 20 ? wantOnHand + 20 - onHand : wantOnHand * 2 - onHand;
+			while (toOrder < deficit){
+				toOrder += bulkAmt;
+			}
  		} else {
 			toOrder = wantOnHand - onHand;
 		}
