@@ -35,4 +35,10 @@ public class FakeDatabase implements InventoryDatabase{
 		// TODO Auto-generated method stub
 		return onOrder;
 	}
+
+	@Override
+	public void setRequiredOnHand(Item item, int newAmount) {
+		// TODO Auto-generated method stub
+		
+	}
 }

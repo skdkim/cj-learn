@@ -30,4 +30,13 @@ public interface InventoryDatabase {
      * @return fetched value
      */
     int onOrder(Item item);
+    
+    /**
+     * Change the required on-hand amount for an item.
+     * 
+     * @param item item to change
+     * 
+     * @param newAmount new nominal stock level
+     */
+    void setRequiredOnHand(Item item, int newAmount);
 }
