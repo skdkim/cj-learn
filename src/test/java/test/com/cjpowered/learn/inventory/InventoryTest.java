@@ -103,47 +103,7 @@ public class InventoryTest {
 	    assertEquals(item, actualOrders.get(0).item);
 	    assertEquals(shouldHave - onHand, actualOrders.get(0).quantity);
     }
-    
-    @Test
-    public void refillSingleStockWithConcurrentOrder(){
-    	// given
-		int onHand = 10;
-		int shouldHave = 16;
-		int onOrder = 3;
-		boolean isRestricted = false;
-		int bulkAmt = 1;
-		
-		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
-		
-		final HashMap<Item, Integer> store = new HashMap<>();
-		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
-		
-		final MarketingInfo mrktInfo = new MarketingInfo(){
-
-			@Override
-			public boolean onSale(Item item) {
-				return false;
-			}
-
-			@Override
-			public Season season(LocalDate when) {
-				return Season.Spring;
-			}
-		};
-		
-		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
-		final LocalDate today = LocalDate.now();
-	
-    	// when
-    	final List<Order> actualOrders = im.getOrders(today);
-		
-    	// then
-	    assertEquals(1, actualOrders.size());
-	    assertEquals(item, actualOrders.get(0).item);
-	    assertEquals(shouldHave - onHand - onOrder, actualOrders.get(0).quantity);
-    }
-    
+        
     @Test
     public void doNotRefillSingleStockSurplus(){
     	// given
@@ -1327,6 +1287,47 @@ public class InventoryTest {
 	    assertEquals(1, actualOrders.size());
 	    assertEquals(32, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
+    }
+    
+
+    @Test
+    public void refillSingleStockWithConcurrentOrder(){
+    	// given
+		int onHand = 10;
+		int shouldHave = 16;
+		int onOrder = 3;
+		boolean isRestricted = false;
+		int bulkAmt = 1;
+		
+		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(item, onHand);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+		
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+
+			@Override
+			public boolean onSale(Item item) {
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Spring;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.now();
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(1, actualOrders.size());
+	    assertEquals(item, actualOrders.get(0).item);
+	    assertEquals(shouldHave - onHand - onOrder, actualOrders.get(0).quantity);
     }
 }
 
