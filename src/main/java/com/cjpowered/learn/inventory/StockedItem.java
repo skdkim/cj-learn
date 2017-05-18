@@ -24,6 +24,7 @@ public class StockedItem implements Item {
 		final int deficit;
 		final boolean onSale = marketInfo.onSale(this);
 		int toOrder = 0;
+		final int onOrder = db.onOrder(this);
 		
 		if (isRestricted){
 			if(when.getDayOfMonth() != 1){
@@ -32,12 +33,12 @@ public class StockedItem implements Item {
 		}
 		
 		if (onSale){
-			deficit = wantOnHand + 20 - onHand;
+			deficit = wantOnHand + 20 - onHand - onOrder;
 			while(toOrder < deficit){
 				toOrder += bulkAmt;
 			}
 		} else {
-			deficit = wantOnHand - onHand;
+			deficit = wantOnHand - onHand - onOrder;
 			while(toOrder < deficit){
 				toOrder += bulkAmt;
 			}

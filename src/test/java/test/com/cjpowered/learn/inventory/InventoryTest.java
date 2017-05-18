@@ -71,12 +71,13 @@ public class InventoryTest {
 		int shouldHave = 16;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
+		int onOrder = 0;
 		
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 
@@ -101,6 +102,46 @@ public class InventoryTest {
 	    assertEquals(1, actualOrders.size());
 	    assertEquals(item, actualOrders.get(0).item);
 	    assertEquals(shouldHave - onHand, actualOrders.get(0).quantity);
+    }
+    
+    @Test
+    public void refillSingleStockWithConcurrentOrder(){
+    	// given
+		int onHand = 10;
+		int shouldHave = 16;
+		int onOrder = 3;
+		boolean isRestricted = false;
+		int bulkAmt = 1;
+		
+		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(item, onHand);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+		
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+
+			@Override
+			public boolean onSale(Item item) {
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Spring;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.now();
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(1, actualOrders.size());
+	    assertEquals(item, actualOrders.get(0).item);
+	    assertEquals(shouldHave - onHand - onOrder, actualOrders.get(0).quantity);
     }
     
     @Test
@@ -547,11 +588,12 @@ public class InventoryTest {
 		final Season season = Season.Summer;
 		final boolean isRestricted = false;
 		int bulkAmt = 1;
+		int onOrder = 0;
 		
 		Item item = new SeasonalItem(shouldHave, season, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -586,11 +628,12 @@ public class InventoryTest {
 		final Season season = Season.Summer;
 		final boolean isRestricted = false;
 		int bulkAmt = 1;
+		int onOrder = 0;
 		
 		Item item = new SeasonalItem(shouldHave, season, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -624,13 +667,14 @@ public class InventoryTest {
 		final Season season = Season.Summer;
 		final boolean isRestricted = false;
 		int bulkAmt = 1;
-		
+		int onOrder = 0;
+
 		Item itemA = new SeasonalItem(shouldHaveA, season, isRestricted, bulkAmt);
 		Item itemB = new SeasonalItem(shouldHaveB, season, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -671,13 +715,14 @@ public class InventoryTest {
 		final Season seasonA = Season.Summer;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-		
+		int onOrder = 0;
+
 		Item itemA = new SeasonalItem(shouldHaveA, seasonA, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -718,13 +763,14 @@ public class InventoryTest {
 		final Season season = Season.Summer;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-		
+		int onOrder = 0;
+
 		Item itemA = new SeasonalItem(shouldHaveA, season, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -763,12 +809,13 @@ public class InventoryTest {
 		final boolean isRestricted = false;
 		final Season season = Season.Summer;
 		int bulkAmt = 1;
-		
+		int onOrder = 0;
+
 		Item item = new SeasonalItem(shouldHave, season, isRestricted, bulkAmt);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -802,12 +849,13 @@ public class InventoryTest {
 		final boolean isRestricted = false;
 		final Season season = Season.Summer;
 		int bulkAmt = 1;
+		int onOrder = 0;
 
 		Item item = new SeasonalItem(shouldHave, season, isRestricted, bulkAmt);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -840,12 +888,13 @@ public class InventoryTest {
 		int shouldHave = 25;
 		boolean isRestricted = true;
 		int bulkAmt = 1;
+		int onOrder = 0;
 
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -876,12 +925,13 @@ public class InventoryTest {
 		int shouldHave = 25;
 		boolean isRestricted = true;
 		int bulkAmt = 1;
+		int onOrder = 0;
 
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -915,6 +965,7 @@ public class InventoryTest {
 		int shouldHaveB = 15;
 		boolean isRestricted = true;
 		int bulkAmt = 1;
+		int onOrder = 0;
 
 		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
@@ -922,7 +973,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -960,12 +1011,13 @@ public class InventoryTest {
 		int shouldHave = 25;
 		boolean isRestricted = true;
 		int bulkAmt = 1;
+		int onOrder = 0;
 
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -997,6 +1049,7 @@ public class InventoryTest {
 		int shouldHave = 10;
 		boolean isRestricted = true;
 		int bulkAmt = 1;
+		int onOrder = 0;
 
 		final Season season = Season.Summer;
 		
@@ -1004,7 +1057,7 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1037,12 +1090,13 @@ public class InventoryTest {
 		
 		final Season season = Season.Summer;
 		int bulkAmt = 1;
+		int onOrder = 0;
 
 		Item item = new SeasonalItem(shouldHave, season, isRestricted, bulkAmt);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1075,12 +1129,13 @@ public class InventoryTest {
 		int shouldHave = 10;
 		boolean isRestricted = false;
 		int bulkAmt = 4;
-				
+		int onOrder = 0;
+
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1116,14 +1171,15 @@ public class InventoryTest {
 		boolean isRestricted = false;
 		int bulkAmtA = 4;
 		int bulkAmtB = 3;
-				
+		int onOrder = 0;
+
 		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmtA);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmtB);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1161,12 +1217,13 @@ public class InventoryTest {
 		int shouldHave = 10;
 		boolean isRestricted = false;
 		int bulkAmt = 4;
-				
+		int onOrder = 0;
+
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1200,12 +1257,13 @@ public class InventoryTest {
 		boolean isRestricted = false;
 		int bulkAmt = 15;
 		Season season = Season.Summer;
-				
+		int onOrder = 0;
+
 		Item item = new SeasonalItem(shouldHave, season, isRestricted, bulkAmt);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1239,12 +1297,13 @@ public class InventoryTest {
 		boolean isRestricted = false;
 		int bulkAmt = 8;
 		Season season = Season.Summer;
-				
+		int onOrder = 0;
+
 		Item item = new SeasonalItem(shouldHave, season, isRestricted, bulkAmt);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store);
+		final InventoryDatabase db = new FakeDatabase(store, onOrder);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
