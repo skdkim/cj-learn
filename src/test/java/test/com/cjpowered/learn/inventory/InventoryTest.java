@@ -1289,7 +1289,7 @@ public class InventoryTest {
 	    assertEquals(item, actualOrders.get(0).item);
     }
     
-// ******************************    THE GREAT DIVIDE!!!! (TESTING FOR ONORDER)    *********************************
+// ******************************    THE GREAT DIVIDE!!!! (TESTING FOR ONORDER)    ******************************
     @Test
     public void refillSingleStockWithConcurrentOrder(){
     	// given
@@ -1405,6 +1405,8 @@ public class InventoryTest {
 	    assertTrue(actualOrders.isEmpty());
     }
     
+    
+    // GIVE_ATTENTION
     @Test
     public void refillMultipleStockWithConcurrentOrder(){
     	// given
@@ -1451,6 +1453,7 @@ public class InventoryTest {
         assertEquals(shouldHaveB - onHandB, actualOrders.get(1).quantity);
     }
     
+    // GIVE_ATTENTION
     @Test
     public void refillMultipleStockOneOnlyWithConcurrentOrder(){
     	// given
@@ -1495,6 +1498,7 @@ public class InventoryTest {
         assertEquals(shouldHaveB - onHandB, actualOrders.get(0).quantity);
     }
     
+    // GIVE_ATTENTION
     @Test(expected=IndexOutOfBoundsException.class)
     public void doNotRefillInvalidStockOnMultipleOrderWithConcurrentOrder(){
     	// given
@@ -1571,7 +1575,7 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(1, actualOrders.size());
-	    assertEquals(shouldHave - onHand + 20, actualOrders.get(0).quantity);
+	    assertEquals(shouldHave - onHand + 20 - onOrder, actualOrders.get(0).quantity);
     }
     
     @Test
@@ -1610,6 +1614,7 @@ public class InventoryTest {
 	    assertEquals(0, actualOrders.size());
     }
     
+    // GIVE_ATTENTION
     @Test
     public void refillMultipleSaleStockWithConcurrentOrder(){
     	// given
@@ -1656,6 +1661,7 @@ public class InventoryTest {
         assertEquals(shouldHaveB - onHandB + 20, actualOrders.get(1).quantity);
     }
     
+    // GIVE_ATTENTION
     @Test
     public void refillMixStockSaleAndRegularWithConcurrentOrder(){
     	// given
@@ -1737,7 +1743,7 @@ public class InventoryTest {
     	// then
 	    assertEquals(1, actualOrders.size());
 	    assertEquals(item, actualOrders.get(0).item);
-	    assertEquals((shouldHave * 2) - onHand, actualOrders.get(0).quantity);
+	    assertEquals((shouldHave * 2) - onHand - onOrder, actualOrders.get(0).quantity);
     }
     
 
@@ -1778,6 +1784,7 @@ public class InventoryTest {
 	    assertEquals(0, actualOrders.size());
     }
     
+    // GIVE_ATTENTION
     @Test
     public void refillMultipleSeasonalStockWithConcurrentOrder(){
     	// given
@@ -1826,6 +1833,7 @@ public class InventoryTest {
 		assertEquals(expected, new HashSet<>(actualOrders));
     }
     
+    // GIVE_ATTENTION
     @Test
     public void refillMixStockSeasonalAndRegularWithConcurrentOrder(){
     	// given
@@ -1874,6 +1882,7 @@ public class InventoryTest {
 		assertEquals(expected, new HashSet<>(actualOrders));
     }
     
+    // GIVE_ATTENTION
     @Test
     public void refillMixStockSeasonalAndSaleWithConcurrentOrder(){
     	// given
@@ -1958,7 +1967,7 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(1, actualOrders.size());	    
-	    assertEquals((shouldHave + 20) - onHand, actualOrders.get(0).quantity);
+	    assertEquals((shouldHave + 20) - onHand - onOrder, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
     }
     
@@ -1998,7 +2007,7 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(1, actualOrders.size());	    
-	    assertEquals((shouldHave * 2) - onHand, actualOrders.get(0).quantity);
+	    assertEquals((shouldHave * 2) - onHand - onOrder, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
     }
     
@@ -2074,9 +2083,10 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(1, actualOrders.size());
-	    assertEquals(shouldHave - onHand, actualOrders.get(0).quantity);
+	    assertEquals(shouldHave - onHand - onOrder, actualOrders.get(0).quantity);
     }
     
+    // GIVE_ATTENTION
     @Test
     public void refillMultipleDateRestrictedRegularStockWithConcurrentOrder(){
     	// given
@@ -2160,7 +2170,7 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(1, actualOrders.size());
-	    assertEquals(shouldHave + 20 - onHand, actualOrders.get(0).quantity);
+	    assertEquals(shouldHave + 20 - onHand - onOrder, actualOrders.get(0).quantity);
     }
     
     @Test
@@ -2239,7 +2249,7 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(1, actualOrders.size());
-	    assertEquals(shouldHave * 2 - onHand, actualOrders.get(0).quantity);
+	    assertEquals(shouldHave * 2 - onHand - onOrder, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
     }
     
@@ -2278,10 +2288,11 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(1, actualOrders.size());
-	    assertEquals(8, actualOrders.get(0).quantity);
+	    assertEquals(8 - onOrder, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
     }
     
+    // GIVE_ATTENTION
     @Test
     public void refillMultipleBulkStockWithConcurrentOrder(){
     	// given
@@ -2366,7 +2377,7 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(1, actualOrders.size());
-	    assertEquals(28, actualOrders.get(0).quantity);
+	    assertEquals(28 - onOrder, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
     }
     
@@ -2406,7 +2417,7 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(1, actualOrders.size());
-	    assertEquals(30, actualOrders.get(0).quantity);
+	    assertEquals(30 - onOrder, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
     }
     
@@ -2446,7 +2457,7 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(1, actualOrders.size());
-	    assertEquals(32, actualOrders.get(0).quantity);
+	    assertEquals(32 - onOrder, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
     }
 }
