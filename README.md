@@ -86,3 +86,5 @@ do not stack
 any orders for those items except on the first of the month
 0. Some items can only be ordered in packages containing multiple units. we
 can stock more than the normal inventory level for those items if necessary
+0. We want to know how many orders are in order. For new orders only create 
+additional orders to fill the requirement.
