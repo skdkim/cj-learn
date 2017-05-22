@@ -1478,8 +1478,6 @@ public class InventoryTest {
 	    assertTrue(actualOrders.isEmpty());
     }
     
-    
-    // GIVE_ATTENTION
     @Test
     public void refillMultipleStockWithConcurrentOrder(){
     	// given
@@ -1523,13 +1521,14 @@ public class InventoryTest {
 		
     	// then
         assertEquals(2, actualOrders.size());
-        assertEquals(itemA, actualOrders.get(0).item);
-        assertEquals(itemB, actualOrders.get(1).item);
-        assertEquals(shouldHaveA - onHandA - onOrderA, actualOrders.get(0).quantity);
-        assertEquals(shouldHaveB - onHandB - onOrderB, actualOrders.get(1).quantity);
+		final Order expectedOrderA = new Order(itemA, (shouldHaveA) - onHandA - onOrderA);
+		final Order expectedOrderB = new Order(itemB, (shouldHaveB) - onHandB - onOrderB);
+		HashSet<Order> expected = new HashSet<>();
+		expected.add(expectedOrderA);
+		expected.add(expectedOrderB);
+		assertEquals(expected, new HashSet<>(actualOrders));
     }
     
-    // GIVE_ATTENTION
     @Test
     public void refillOnlyOneOfMultipleStockWithConcurrentOrder(){
     	// given
@@ -1747,10 +1746,13 @@ public class InventoryTest {
 		
     	// then
         assertEquals(2, actualOrders.size());
-        assertEquals(itemA, actualOrders.get(0).item);
-        assertEquals(itemB, actualOrders.get(1).item);
-        assertEquals(shouldHaveA - onHandA + 20 - onOrderA, actualOrders.get(0).quantity);
-        assertEquals(shouldHaveB - onHandB + 20 - onOrderB, actualOrders.get(1).quantity);
+        
+		final Order expectedOrderA = new Order(itemA, (20 +  shouldHaveA) - onHandA - onOrderA);
+		final Order expectedOrderB = new Order(itemB, (20 +  shouldHaveB) - onHandB - onOrderB);
+		HashSet<Order> expected = new HashSet<>();
+		expected.add(expectedOrderA);
+		expected.add(expectedOrderB);
+		assertEquals(expected, new HashSet<>(actualOrders));
     }
     
     @Test
@@ -1796,10 +1798,13 @@ public class InventoryTest {
 		
     	// then
         assertEquals(2, actualOrders.size());
-        assertEquals(itemA, actualOrders.get(0).item);
-        assertEquals(itemB, actualOrders.get(1).item);
-        assertEquals(shouldHaveA - onHandA + 20 - onOrderA, actualOrders.get(0).quantity);
-        assertEquals(shouldHaveB - onHandB - onOrderB, actualOrders.get(1).quantity);
+
+		final Order expectedOrderA = new Order(itemA, (20 + shouldHaveA) - onHandA - onOrderA);
+		final Order expectedOrderB = new Order(itemB, (shouldHaveB) - onHandB - onOrderB);
+		HashSet<Order> expected = new HashSet<>();
+		expected.add(expectedOrderA);
+		expected.add(expectedOrderB);
+		assertEquals(expected, new HashSet<>(actualOrders));
     }
     
     @Test
