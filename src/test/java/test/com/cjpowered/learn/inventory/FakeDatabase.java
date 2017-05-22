@@ -11,9 +11,9 @@ import com.cjpowered.learn.inventory.Item;
 public class FakeDatabase implements InventoryDatabase{
 
 	private final Map<Item, Integer> dataStore;
-	private final int onOrder;
+	private final Map<Item, Integer> onOrder;
 	
-	public FakeDatabase(final Map<Item, Integer> dataStore, final int onOrder){
+	public FakeDatabase(final Map<Item, Integer> dataStore, final Map<Item, Integer> onOrder){
 		this.dataStore = dataStore;
 		this.onOrder = onOrder;
 	}
@@ -33,7 +33,7 @@ public class FakeDatabase implements InventoryDatabase{
 	@Override
 	public int onOrder(Item item) {
 		// TODO Auto-generated method stub
-		return onOrder;
+		return onOrder.get(item);
 	}
 
 	@Override

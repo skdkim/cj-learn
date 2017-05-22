@@ -77,7 +77,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 
@@ -553,7 +556,9 @@ public class InventoryTest {
 		Item item = new SeasonalItem(shouldHave, season, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -593,7 +598,10 @@ public class InventoryTest {
 		Item item = new SeasonalItem(shouldHave, season, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+		
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -634,7 +642,12 @@ public class InventoryTest {
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrder);
+		currOrders.put(itemB, onOrder);
+		
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -657,8 +670,8 @@ public class InventoryTest {
     	// then
 	    assertEquals(2, actualOrders.size());	    
 		
-		final Order expectedOrderA = new Order(itemA, (2 * 20) - 39);
-		final Order expectedOrderB = new Order(itemB, (2 * 15) - 21);
+		final Order expectedOrderA = new Order(itemA, (2 * shouldHaveA) - onHandA);
+		final Order expectedOrderB = new Order(itemB, (2 * shouldHaveB) - onHandB);
 		HashSet<Order> expected = new HashSet<>();
 		expected.add(expectedOrderA);
 		expected.add(expectedOrderB);
@@ -682,7 +695,12 @@ public class InventoryTest {
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrder);
+		currOrders.put(itemB, onOrder);
+		
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -730,7 +748,12 @@ public class InventoryTest {
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrder);
+		currOrders.put(itemB, onOrder);
+		
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -775,7 +798,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -815,7 +841,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -854,7 +883,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -891,7 +923,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -933,7 +968,11 @@ public class InventoryTest {
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrder);
+		currOrders.put(itemB, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -977,7 +1016,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1017,7 +1059,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1056,7 +1101,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1095,7 +1143,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1139,7 +1190,11 @@ public class InventoryTest {
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrder);
+		currOrders.put(itemB, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1183,7 +1238,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1223,7 +1281,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1263,7 +1324,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1303,7 +1367,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 
@@ -1342,7 +1409,10 @@ public class InventoryTest {
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 
@@ -1380,7 +1450,10 @@ public class InventoryTest {
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1416,7 +1489,8 @@ public class InventoryTest {
 		int shouldHaveB = 20;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-		int onOrder = 2;
+		int onOrderA = 2;
+		int onOrderB = 3;
 		
 		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
@@ -1424,8 +1498,10 @@ public class InventoryTest {
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
 		
-		// how do you know which item is on order???
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrderA);
+		currOrders.put(itemB, onOrderB);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1449,13 +1525,13 @@ public class InventoryTest {
         assertEquals(2, actualOrders.size());
         assertEquals(itemA, actualOrders.get(0).item);
         assertEquals(itemB, actualOrders.get(1).item);
-        assertEquals(shouldHaveA - onHandA, actualOrders.get(0).quantity);
-        assertEquals(shouldHaveB - onHandB, actualOrders.get(1).quantity);
+        assertEquals(shouldHaveA - onHandA - onOrderA, actualOrders.get(0).quantity);
+        assertEquals(shouldHaveB - onHandB - onOrderB, actualOrders.get(1).quantity);
     }
     
     // GIVE_ATTENTION
     @Test
-    public void refillMultipleStockOneOnlyWithConcurrentOrder(){
+    public void refillOnlyOneOfMultipleStockWithConcurrentOrder(){
     	// given
 		int onHandA = 10;
 		int onHandB = 12;
@@ -1463,7 +1539,8 @@ public class InventoryTest {
 		int shouldHaveB = 20;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-		int onOrder = 2;
+		int onOrderA = 2;
+		int onOrderB = 3;
 		
 		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
@@ -1472,7 +1549,10 @@ public class InventoryTest {
 		store.put(itemB, onHandB);
 		
 		// how do you know which item is on order???
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrderA);
+		currOrders.put(itemB, onOrderB);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1495,10 +1575,9 @@ public class InventoryTest {
     	// then
         assertEquals(1, actualOrders.size());
         assertEquals(itemB, actualOrders.get(0).item);
-        assertEquals(shouldHaveB - onHandB, actualOrders.get(0).quantity);
+        assertEquals(shouldHaveB - onHandB - onOrderB, actualOrders.get(0).quantity);
     }
     
-    // GIVE_ATTENTION
     @Test(expected=IndexOutOfBoundsException.class)
     public void doNotRefillInvalidStockOnMultipleOrderWithConcurrentOrder(){
     	// given
@@ -1508,7 +1587,8 @@ public class InventoryTest {
 		int shouldHaveB = 20;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-		int onOrder = 2;
+		int onOrderA = 1;
+		int onOrderB = 2;
 		
 		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
@@ -1517,7 +1597,10 @@ public class InventoryTest {
 		store.put(itemB, onHandB);
 		
 		// how do you know which item is on order???
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrderA);
+		currOrders.put(itemB, onOrderB);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1553,7 +1636,10 @@ public class InventoryTest {
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1590,7 +1676,10 @@ public class InventoryTest {
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1614,17 +1703,17 @@ public class InventoryTest {
 	    assertEquals(0, actualOrders.size());
     }
     
-    // GIVE_ATTENTION
     @Test
     public void refillMultipleSaleStockWithConcurrentOrder(){
     	// given
-		int onHandA = 34;
-		int onHandB = 34;
+		int onHandA = 30;
+		int onHandB = 30;
 		int shouldHaveA = 15;
 		int shouldHaveB = 15;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-		int onOrder = 2;
+		int onOrderA = 2;
+		int onOrderB = 3;
 		
 		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
@@ -1632,8 +1721,11 @@ public class InventoryTest {
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		// HOW DO WE KNOW WHICH IS ONORDER?
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrderA);
+		currOrders.put(itemB, onOrderB);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1657,11 +1749,10 @@ public class InventoryTest {
         assertEquals(2, actualOrders.size());
         assertEquals(itemA, actualOrders.get(0).item);
         assertEquals(itemB, actualOrders.get(1).item);
-        assertEquals(shouldHaveA - onHandA + 20, actualOrders.get(0).quantity);
-        assertEquals(shouldHaveB - onHandB + 20, actualOrders.get(1).quantity);
+        assertEquals(shouldHaveA - onHandA + 20 - onOrderA, actualOrders.get(0).quantity);
+        assertEquals(shouldHaveB - onHandB + 20 - onOrderB, actualOrders.get(1).quantity);
     }
     
-    // GIVE_ATTENTION
     @Test
     public void refillMixStockSaleAndRegularWithConcurrentOrder(){
     	// given
@@ -1671,15 +1762,19 @@ public class InventoryTest {
 		int shouldHaveB = 18;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-		int onOrder = 2;
+		int onOrderA = 2;
+		int onOrderB = 3;
 		
 		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		// HOW DO WE KNOW WHICH IS ONORDER?
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrderA);
+		currOrders.put(itemB, onOrderB);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1703,8 +1798,8 @@ public class InventoryTest {
         assertEquals(2, actualOrders.size());
         assertEquals(itemA, actualOrders.get(0).item);
         assertEquals(itemB, actualOrders.get(1).item);
-        assertEquals(shouldHaveA - onHandA + 20, actualOrders.get(0).quantity);
-        assertEquals(shouldHaveB - onHandB, actualOrders.get(1).quantity);
+        assertEquals(shouldHaveA - onHandA + 20 - onOrderA, actualOrders.get(0).quantity);
+        assertEquals(shouldHaveB - onHandB - onOrderB, actualOrders.get(1).quantity);
     }
     
     @Test
@@ -1720,7 +1815,10 @@ public class InventoryTest {
 		Item item = new SeasonalItem(shouldHave, season, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1760,7 +1858,10 @@ public class InventoryTest {
 		Item item = new SeasonalItem(shouldHave, season, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1784,25 +1885,29 @@ public class InventoryTest {
 	    assertEquals(0, actualOrders.size());
     }
     
-    // GIVE_ATTENTION
     @Test
     public void refillMultipleSeasonalStockWithConcurrentOrder(){
     	// given
-		int onHandA = 39;
+		int onHandA = 37;
 		int shouldHaveA = 20;
 		int onHandB = 21;
 		int shouldHaveB = 15;
 		final Season season = Season.Summer;
 		final boolean isRestricted = false;
 		int bulkAmt = 1;
-		int onOrder = 2;
+		int onOrderA = 2;
+		int onOrderB = 3;
 
 		Item itemA = new SeasonalItem(shouldHaveA, season, isRestricted, bulkAmt);
 		Item itemB = new SeasonalItem(shouldHaveB, season, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrderA);
+		currOrders.put(itemB, onOrderB);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1825,33 +1930,37 @@ public class InventoryTest {
     	// then
 	    assertEquals(2, actualOrders.size());	    
 		
-		final Order expectedOrderA = new Order(itemA, (2 * 20) - 39);
-		final Order expectedOrderB = new Order(itemB, (2 * 15) - 21);
+		final Order expectedOrderA = new Order(itemA, (2 * shouldHaveA) - onHandA - onOrderA);
+		final Order expectedOrderB = new Order(itemB, (2 * shouldHaveB) - onHandB - onOrderB);
 		HashSet<Order> expected = new HashSet<>();
 		expected.add(expectedOrderA);
 		expected.add(expectedOrderB);
 		assertEquals(expected, new HashSet<>(actualOrders));
     }
     
-    // GIVE_ATTENTION
     @Test
     public void refillMixStockSeasonalAndRegularWithConcurrentOrder(){
     	// given
-		int onHandA = 39;
+		int onHandA = 37;
 		int shouldHaveA = 20;
 		int onHandB = 10;
 		int shouldHaveB = 15;
 		final Season seasonA = Season.Summer;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-		int onOrder = 2;
+		int onOrderA = 2;
+		int onOrderB = 3;
 
 		Item itemA = new SeasonalItem(shouldHaveA, seasonA, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrderA);
+		currOrders.put(itemB, onOrderB);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1874,33 +1983,37 @@ public class InventoryTest {
     	// then
 	    assertEquals(2, actualOrders.size());	    
 		
-		final Order expectedOrderA = new Order(itemA, (2 * 20) - 39);
-		final Order expectedOrderB = new Order(itemB, 15 - 10);
+		final Order expectedOrderA = new Order(itemA, (2 * shouldHaveA) - onHandA - onOrderA);
+		final Order expectedOrderB = new Order(itemB, shouldHaveB - onHandB - onOrderB);
 		HashSet<Order> expected = new HashSet<>();
 		expected.add(expectedOrderA);
 		expected.add(expectedOrderB);
 		assertEquals(expected, new HashSet<>(actualOrders));
     }
     
-    // GIVE_ATTENTION
     @Test
     public void refillMixStockSeasonalAndSaleWithConcurrentOrder(){
     	// given
-		int onHandA = 39;
+		int onHandA = 37;
 		int shouldHaveA = 20;
 		int onHandB = 10;
 		int shouldHaveB = 15;
 		final Season season = Season.Summer;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
-		int onOrder = 2;
+		int onOrderA = 2;
+		int onOrderB = 3;
 
 		Item itemA = new SeasonalItem(shouldHaveA, season, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrderA);
+		currOrders.put(itemB, onOrderB);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1923,8 +2036,8 @@ public class InventoryTest {
     	// then
 	    assertEquals(2, actualOrders.size());	    
 		
-		final Order expectedOrderA = new Order(itemA, (2 * 20) - 39);
-		final Order expectedOrderB = new Order(itemB, (15 + 20) - 10);
+		final Order expectedOrderA = new Order(itemA, (2 * shouldHaveA) - onHandA - onOrderA);
+		final Order expectedOrderB = new Order(itemB, (20 + shouldHaveB) - onHandB - onOrderB);
 		HashSet<Order> expected = new HashSet<>();
 		expected.add(expectedOrderA);
 		expected.add(expectedOrderB);
@@ -1945,7 +2058,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1985,7 +2101,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2024,7 +2143,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2061,7 +2183,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2086,17 +2211,17 @@ public class InventoryTest {
 	    assertEquals(shouldHave - onHand - onOrder, actualOrders.get(0).quantity);
     }
     
-    // GIVE_ATTENTION
     @Test
     public void refillMultipleDateRestrictedRegularStockWithConcurrentOrder(){
     	// given
-		int onHandA = 22;
+		int onHandA = 20;
 		int onHandB = 10;
 		int shouldHaveA = 25;
 		int shouldHaveB = 15;
 		boolean isRestricted = true;
 		int bulkAmt = 1;
-		int onOrder = 2;
+		int onOrderA = 2;
+		int onOrderB = 3;
 
 		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmt);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
@@ -2104,7 +2229,11 @@ public class InventoryTest {
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrderA);
+		currOrders.put(itemB, onOrderB);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2127,8 +2256,8 @@ public class InventoryTest {
     	// then
 	    assertEquals(2, actualOrders.size());
 	    
-		final Order expectedOrderA = new Order(itemA, shouldHaveA - onHandA);
-		final Order expectedOrderB = new Order(itemB, shouldHaveB - onHandB);
+		final Order expectedOrderA = new Order(itemA, shouldHaveA - onHandA - onOrderA);
+		final Order expectedOrderB = new Order(itemB, shouldHaveB - onHandB - onOrderB);
 		HashSet<Order> expected = new HashSet<>();
 		expected.add(expectedOrderA);
 		expected.add(expectedOrderB);
@@ -2148,7 +2277,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2188,7 +2320,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2227,7 +2362,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2266,7 +2404,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2288,11 +2429,10 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(1, actualOrders.size());
-	    assertEquals(8 - onOrder, actualOrders.get(0).quantity);
+	    assertEquals(8, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
     }
     
-    // GIVE_ATTENTION
     @Test
     public void refillMultipleBulkStockWithConcurrentOrder(){
     	// given
@@ -2303,7 +2443,8 @@ public class InventoryTest {
 		boolean isRestricted = false;
 		int bulkAmtA = 4;
 		int bulkAmtB = 3;
-		int onOrder = 2;
+		int onOrderA = 2;
+		int onOrderB = 3;
 
 		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmtA);
 		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmtB);
@@ -2311,7 +2452,11 @@ public class InventoryTest {
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(itemA, onHandA);
 		store.put(itemB, onHandB);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrderA);
+		currOrders.put(itemB, onOrderB);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2335,7 +2480,7 @@ public class InventoryTest {
 	    assertEquals(2, actualOrders.size());
 	    
 		final Order expectedOrderA = new Order(itemA, 8);
-		final Order expectedOrderB = new Order(itemB, 6);
+		final Order expectedOrderB = new Order(itemB, 3);
 		HashSet<Order> expected = new HashSet<>();
 		expected.add(expectedOrderA);
 		expected.add(expectedOrderB);
@@ -2355,7 +2500,9 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2377,7 +2524,7 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(1, actualOrders.size());
-	    assertEquals(28 - onOrder, actualOrders.get(0).quantity);
+	    assertEquals(28, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
     }
     
@@ -2395,7 +2542,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2417,7 +2567,7 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(1, actualOrders.size());
-	    assertEquals(30 - onOrder, actualOrders.get(0).quantity);
+	    assertEquals(15, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
     }
     
@@ -2435,7 +2585,10 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
 		store.put(item, onHand);
-		final InventoryDatabase db = new FakeDatabase(store, onOrder);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2457,7 +2610,7 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(1, actualOrders.size());
-	    assertEquals(32 - onOrder, actualOrders.get(0).quantity);
+	    assertEquals(24, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
     }
 }

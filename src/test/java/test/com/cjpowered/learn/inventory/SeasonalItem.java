@@ -31,6 +31,7 @@ public class SeasonalItem implements Item{
 		final boolean onSale = marketInfo.onSale(this);
 		final int deficit;
 		int toOrder = 0;
+		final int onOrder = db.onOrder(this);
 		
 		if (isRestricted){
 			if(when.getDayOfMonth() != 1){
@@ -40,17 +41,17 @@ public class SeasonalItem implements Item{
 		
 		if (inSeason && !onSale){
 			
-			deficit = wantOnHand * 2 - onHand;
+			deficit = wantOnHand * 2 - onHand - onOrder;
 			while (toOrder < deficit){
 				toOrder += bulkAmt;
 			}
 		} else if (inSeason && onSale){
-			deficit = wantOnHand < 20 ? wantOnHand + 20 - onHand : wantOnHand * 2 - onHand;
+			deficit = wantOnHand < 20 ? wantOnHand + 20 - onHand - onOrder: wantOnHand * 2 - onHand - onOrder;
 			while (toOrder < deficit){
 				toOrder += bulkAmt;
 			}
  		} else {
-			toOrder = wantOnHand - onHand;
+			toOrder = wantOnHand - onHand - onOrder;
 		}
 		maybeOrder = new Order(this, toOrder);
 		return maybeOrder;
