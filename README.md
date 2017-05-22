@@ -87,4 +87,11 @@ any orders for those items except on the first of the month
 0. Some items can only be ordered in packages containing multiple units. we
 can stock more than the normal inventory level for those items if necessary
 0. We want to know how many orders are in order. For new orders only create 
-additional orders to fill the requirement.
+additional orders to fill the requirement
+0. Never stock more than the normal level, even for multi-unit purchases
+0. Do not order if we have over 80% on hand
+0. We add 10% to the normal level if we ever run out of an item
+
+## Refactoring
+- Use strategies to test in isolation
+- Use mocks (mockito)
