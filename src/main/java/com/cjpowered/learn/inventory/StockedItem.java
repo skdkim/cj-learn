@@ -31,16 +31,20 @@ public class StockedItem implements Item {
 				return new Order(this, 0);
 			}
 		}
-		
 		if (onSale){
 			deficit = wantOnHand + 20 - onHand - onOrder;
-			while(toOrder < deficit  && toOrder + bulkAmt <= deficit){
-				toOrder += bulkAmt;
+			if (db.onHand(this) + db.onOrder(this) <= deficit * .80 ){
+				while(toOrder < deficit  && toOrder + bulkAmt <= deficit){
+					toOrder += bulkAmt;
+				}				
 			}
+
 		} else {
 			deficit = wantOnHand - onHand - onOrder;
-			while(toOrder < deficit && toOrder + bulkAmt <= deficit){
-				toOrder += bulkAmt;
+			if (db.onHand(this) + db.onOrder(this) <= deficit * .80 ){
+				while(toOrder < deficit && toOrder + bulkAmt <= deficit){
+					toOrder += bulkAmt;
+				}			
 			}
 		}
 

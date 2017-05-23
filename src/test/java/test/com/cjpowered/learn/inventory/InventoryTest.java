@@ -108,6 +108,47 @@ public class InventoryTest {
     }
         
     @Test
+    public void doNotRefillSingleStockOverEightyPercentRequired(){
+    	// given
+		int onHand = 10;
+		int shouldHave = 11;
+		boolean isRestricted = false;
+		int bulkAmt = 1;
+		int onOrder = 0;
+		
+		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(item, onHand);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+
+			@Override
+			public boolean onSale(Item item) {
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Spring;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.now();
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(0, actualOrders.size());
+    }
+    
+    @Test
     public void doNotRefillSingleStockSurplus(){
     	// given
 		int onHand = 16;
@@ -247,6 +288,50 @@ public class InventoryTest {
         assertEquals(itemB, actualOrders.get(1).item);
         assertEquals(shouldHaveA - onHandA, actualOrders.get(0).quantity);
         assertEquals(shouldHaveB - onHandB, actualOrders.get(1).quantity);
+    }
+    
+    @Test
+    public void doNotRefillMultipleStockOverEightyPercent(){
+    	// given
+		int onHandA = 10;
+		int onHandB = 12;
+		int shouldHaveA = 12;
+		int shouldHaveB = 14;
+		boolean isRestricted = false;
+		int bulkAmt = 1;
+		int onOrder = 0;
+				
+		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmt);
+		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(itemA, onHandA);
+		store.put(itemB, onHandB);
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrder);
+		currOrders.put(itemB, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+			@Override
+			public boolean onSale(Item item) {
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Spring;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.now();
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+        assertEquals(0, actualOrders.size());
     }
     
     @Test
