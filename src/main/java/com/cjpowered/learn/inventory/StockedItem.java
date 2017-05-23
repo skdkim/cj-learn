@@ -34,7 +34,7 @@ public class StockedItem implements Item {
 		
 		if (onSale){
 			deficit = wantOnHand + 20 - onHand - onOrder;
-			while(toOrder < deficit){
+			while(toOrder < deficit  && toOrder + bulkAmt <= deficit){
 				toOrder += bulkAmt;
 			}
 		} else {
