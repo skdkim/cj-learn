@@ -39,7 +39,7 @@ public class StockedItem implements Item {
 			}
 		} else {
 			deficit = wantOnHand - onHand - onOrder;
-			while(toOrder < deficit){
+			while(toOrder < deficit && toOrder + bulkAmt <= deficit){
 				toOrder += bulkAmt;
 			}
 		}

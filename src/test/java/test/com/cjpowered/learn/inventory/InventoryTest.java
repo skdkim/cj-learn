@@ -1131,49 +1131,7 @@ public class InventoryTest {
     }
     
     @Test
-    public void refillBulkItem(){
-    	// given
-		int onHand = 3;
-		int shouldHave = 10;
-		boolean isRestricted = false;
-		int bulkAmt = 4;
-		int onOrder = 0;
-
-		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
-		
-		final HashMap<Item, Integer> store = new HashMap<>();
-		store.put(item, onHand);
-
-		final HashMap<Item, Integer> currOrders = new HashMap<>();
-		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
-		
-		final MarketingInfo mrktInfo = new MarketingTemplate(){
-			@Override
-			public boolean onSale(Item item) {
-				return false;
-			}
-
-			@Override
-			public Season season(LocalDate when) {
-				return Season.Summer;
-			}
-		};
-		
-		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
-		final LocalDate today = LocalDate.of(2017, 1, 1);
-	
-    	// when
-    	final List<Order> actualOrders = im.getOrders(today);
-		
-    	// then
-	    assertEquals(1, actualOrders.size());
-	    assertEquals(8, actualOrders.get(0).quantity);
-	    assertEquals(item, actualOrders.get(0).item);
-    }
-    
-    @Test
-    public void refillMultipleBulkStock(){
+    public void refillMultipleBulkStockNoOverflow(){
     	// given
 		int onHandA = 3;
 		int shouldHaveA = 10;
@@ -1217,8 +1175,8 @@ public class InventoryTest {
     	// then
 	    assertEquals(2, actualOrders.size());
 	    
-		final Order expectedOrderA = new Order(itemA, 8);
-		final Order expectedOrderB = new Order(itemB, 6);
+		final Order expectedOrderA = new Order(itemA, 4);
+		final Order expectedOrderB = new Order(itemB, 3);
 		HashSet<Order> expected = new HashSet<>();
 		expected.add(expectedOrderA);
 		expected.add(expectedOrderB);
@@ -2397,7 +2355,7 @@ public class InventoryTest {
     }
     
     @Test
-    public void refillBulkItemWithConcurrentOrder(){
+    public void refillBulkItemWithConcurrentOrderNoOverflow(){
     	// given
 		int onHand = 3;
 		int shouldHave = 10;
@@ -2434,12 +2392,12 @@ public class InventoryTest {
 		
     	// then
 	    assertEquals(1, actualOrders.size());
-	    assertEquals(8, actualOrders.get(0).quantity);
+	    assertEquals(4, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
     }
     
     @Test
-    public void refillMultipleBulkStockWithConcurrentOrder(){
+    public void refillMultipleBulkStockWithConcurrentOrderNoOverflow(){
     	// given
 		int onHandA = 3;
 		int shouldHaveA = 10;
@@ -2482,14 +2440,16 @@ public class InventoryTest {
     	final List<Order> actualOrders = im.getOrders(today);
 		
     	// then
-	    assertEquals(2, actualOrders.size());
+	    assertEquals(1, actualOrders.size());
+	    assertEquals(4, actualOrders.get(0).quantity);
+	    assertEquals(itemA, actualOrders.get(0).item);
 	    
-		final Order expectedOrderA = new Order(itemA, 8);
-		final Order expectedOrderB = new Order(itemB, 3);
-		HashSet<Order> expected = new HashSet<>();
-		expected.add(expectedOrderA);
-		expected.add(expectedOrderB);
-		assertEquals(expected, new HashSet<>(actualOrders));
+//		final Order expectedOrderA = new Order(itemA, 8);
+//		final Order expectedOrderB = new Order(itemB, 3);
+//		HashSet<Order> expected = new HashSet<>();
+//		expected.add(expectedOrderA);
+//		expected.add(expectedOrderB);
+//		assertEquals(expected, new HashSet<>(actualOrders));
     }
     
     @Test
@@ -2616,6 +2576,50 @@ public class InventoryTest {
     	// then
 	    assertEquals(1, actualOrders.size());
 	    assertEquals(24, actualOrders.get(0).quantity);
+	    assertEquals(item, actualOrders.get(0).item);
+    }
+    
+    
+    
+    @Test
+    public void refillBulkStockNoOverflow(){
+    	// given
+		int onHand = 3;
+		int shouldHave = 10;
+		boolean isRestricted = false;
+		int bulkAmt = 3;
+		int onOrder = 0;
+
+		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(item, onHand);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		
+		final MarketingInfo mrktInfo = new MarketingTemplate(){
+			@Override
+			public boolean onSale(Item item) {
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Summer;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.of(2017, 1, 1);
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(1, actualOrders.size());
+	    assertEquals(6, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
     }
 }
