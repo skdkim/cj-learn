@@ -42,13 +42,17 @@ public class SeasonalItem implements Item{
 		if (inSeason && !onSale){
 			
 			deficit = wantOnHand * 2 - onHand - onOrder;
-			while (toOrder < deficit && toOrder + bulkAmt <= deficit){
-				toOrder += bulkAmt;
+			if (db.onHand(this) + db.onOrder(this) <= (wantOnHand * 2) * 0.8  ){
+				while (toOrder < deficit && toOrder + bulkAmt <= deficit){
+					toOrder += bulkAmt;
+				}
 			}
 		} else if (inSeason && onSale){
 			deficit = wantOnHand < 20 ? wantOnHand + 20 - onHand - onOrder: wantOnHand * 2 - onHand - onOrder;
-			while (toOrder < deficit && toOrder + bulkAmt <= deficit){
-				toOrder += bulkAmt;
+			if (db.onHand(this) + db.onOrder(this) <= (deficit + onOrder) * 0.8  ){
+				while (toOrder < deficit && toOrder + bulkAmt <= deficit){
+					toOrder += bulkAmt;
+				}
 			}
  		} else {
 			toOrder = wantOnHand - onHand - onOrder;

@@ -108,7 +108,7 @@ public class InventoryTest {
     }
         
     @Test
-    public void doNotRefillSingleStockOverEightyPercentRequired(){
+    public void doNotRefillSingleStockOverEightyPercent(){
     	// given
 		int onHand = 10;
 		int shouldHave = 11;
@@ -441,19 +441,15 @@ public class InventoryTest {
 		int shouldHave = 15;
 		boolean isRestricted = false;
 		int bulkAmt = 1;
+		int onOrder = 0;
 		
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
-		final InventoryDatabase db = new DatabaseTemplate() {
-			@Override
-			public int onHand(Item item){
-				return onHand;
-			}
-			
-			@Override
-			public List<Item> stockItems(){
-				return Collections.singletonList(item);
-			}
-		};
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(item, onHand);
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -476,6 +472,45 @@ public class InventoryTest {
     	// then
 	    assertEquals(1, actualOrders.size());
 	    assertEquals(shouldHave - onHand + 20, actualOrders.get(0).quantity);
+    }
+    
+    @Test
+    public void doNotRefillSaleStockOverEightyPercent(){
+    	// given
+		int onHand = 33;
+		int shouldHave = 15;
+		boolean isRestricted = false;
+		int bulkAmt = 1;
+		int onOrder = 0;
+		
+		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(item, onHand);
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+			@Override
+			public boolean onSale(Item item) {
+				return true;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Spring;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.now();
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(0, actualOrders.size());
     }
     
     @Test
@@ -524,8 +559,8 @@ public class InventoryTest {
     @Test
     public void refillMultipleSaleStock(){
     	// given
-		int onHandA = 34;
-		int onHandB = 34;
+		int onHandA = 24;
+		int onHandB = 24;
 		int shouldHaveA = 15;
 		int shouldHaveB = 15;
 		boolean isRestricted = false;
@@ -576,9 +611,53 @@ public class InventoryTest {
     }
     
     @Test
+    public void doNotRefillMultipleSaleStockOverEightyPercent(){
+    	// given
+		int onHandA = 34;
+		int onHandB = 34;
+		int shouldHaveA = 15;
+		int shouldHaveB = 15;
+		boolean isRestricted = false;
+		int bulkAmt = 1;
+		int onOrder = 0;
+		
+		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmt);
+		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(itemA, onHandA);
+		store.put(itemB, onHandB);
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, onOrder);
+		currOrders.put(itemB, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+			@Override
+			public boolean onSale(Item item) {
+				return true;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Spring;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.now();
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+        assertEquals(0, actualOrders.size());
+    }
+    
+    @Test
     public void refillMixStockSaleAndRegular(){
     	// given
-		int onHandA = 30;
+		int onHandA = 25;
 		int onHandB = 14;
 		int shouldHaveA = 15;
 		int shouldHaveB = 18;
@@ -629,6 +708,56 @@ public class InventoryTest {
     }
     
     @Test
+    public void doNotRefillMixStockSaleAndRegularOverEightyPercent(){
+    	// given
+		int onHandA = 25;
+		int onHandB = 14;
+		int shouldHaveA = 15;
+		int shouldHaveB = 18;
+		boolean isRestricted = false;
+		int bulkAmt = 1;
+		
+		Item itemA = new StockedItem(shouldHaveA, isRestricted, bulkAmt);
+		Item itemB = new StockedItem(shouldHaveB, isRestricted, bulkAmt);
+			
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(itemA, onHandA);
+		store.put(itemB, onHandB);
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(itemA, 0);
+		currOrders.put(itemB, 0);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+			@Override
+			public boolean onSale(Item item) {
+				return item == itemA ? true : false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Spring;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.now();
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+        assertEquals(2, actualOrders.size());
+
+		final Order expectedOrderA = new Order(itemA, (20 + shouldHaveA) - onHandA);
+		final Order expectedOrderB = new Order(itemB, (shouldHaveB) - onHandB);
+		HashSet<Order> expected = new HashSet<>();
+		expected.add(expectedOrderA);
+		expected.add(expectedOrderB);
+		assertEquals(expected, new HashSet<>(actualOrders));
+    }
+    
+    @Test
     public void refillSingleSeasonalStock(){
     	// given
 		int onHand = 10;
@@ -669,6 +798,44 @@ public class InventoryTest {
 	    assertEquals((shouldHave * 2) - onHand, actualOrders.get(0).quantity);
     }
     
+    @Test
+    public void doNotRefillSingleSeasonalStockOverEightyPercent(){
+    	// given
+		int onHand = 31;
+		int shouldHave = 16;
+		final Season season = Season.Summer;
+		final boolean isRestricted = false;
+		int bulkAmt = 1;
+		int onOrder = 0;
+		
+		Item item = new SeasonalItem(shouldHave, season, isRestricted, bulkAmt);
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(item, onHand);
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		
+		final MarketingInfo mrktInfo = new MarketingTemplate(){
+			@Override
+			public boolean onSale(Item item) {
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Summer;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.now();
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(0, actualOrders.size());
+    }
 
     @Test
     public void doNotRefillSingleSeasonalStock(){
@@ -713,9 +880,9 @@ public class InventoryTest {
     @Test
     public void refillMultipleSeasonalStock(){
     	// given
-		int onHandA = 39;
+		int onHandA = 30;
 		int shouldHaveA = 20;
-		int onHandB = 21;
+		int onHandB = 12;
 		int shouldHaveB = 15;
 		final Season season = Season.Summer;
 		final boolean isRestricted = false;
@@ -766,7 +933,7 @@ public class InventoryTest {
     @Test
     public void refillMixStockSeasonalAndRegular(){
     	// given
-		int onHandA = 39;
+		int onHandA = 20;
 		int shouldHaveA = 20;
 		int onHandB = 10;
 		int shouldHaveB = 15;
@@ -808,8 +975,8 @@ public class InventoryTest {
     	// then
 	    assertEquals(2, actualOrders.size());	    
 		
-		final Order expectedOrderA = new Order(itemA, (2 * 20) - 39);
-		final Order expectedOrderB = new Order(itemB, 15 - 10);
+		final Order expectedOrderA = new Order(itemA, (2 * shouldHaveA) - onHandA);
+		final Order expectedOrderB = new Order(itemB, shouldHaveB - onHandB);
 		HashSet<Order> expected = new HashSet<>();
 		expected.add(expectedOrderA);
 		expected.add(expectedOrderB);
@@ -819,7 +986,7 @@ public class InventoryTest {
     @Test
     public void refillMixStockSeasonalAndSale(){
     	// given
-		int onHandA = 39;
+		int onHandA = 20;
 		int shouldHaveA = 20;
 		int onHandB = 10;
 		int shouldHaveB = 15;
@@ -861,8 +1028,8 @@ public class InventoryTest {
     	// then
 	    assertEquals(2, actualOrders.size());	    
 		
-		final Order expectedOrderA = new Order(itemA, (2 * 20) - 39);
-		final Order expectedOrderB = new Order(itemB, (15 + 20) - 10);
+		final Order expectedOrderA = new Order(itemA, (2 * shouldHaveA) - onHandA);
+		final Order expectedOrderB = new Order(itemB, (20 + shouldHaveB) - onHandB);
 		HashSet<Order> expected = new HashSet<>();
 		expected.add(expectedOrderA);
 		expected.add(expectedOrderB);
@@ -998,7 +1165,7 @@ public class InventoryTest {
     @Test
     public void refillDateRestrictedRegularStock(){
     	// given
-		int onHand = 22;
+		int onHand = 19;
 		int shouldHave = 25;
 		boolean isRestricted = true;
 		int bulkAmt = 1;
@@ -1039,7 +1206,7 @@ public class InventoryTest {
     @Test
     public void refillMultipleDateRestrictedRegularStock(){
     	// given
-		int onHandA = 22;
+		int onHandA = 19;
 		int onHandB = 10;
 		int shouldHaveA = 25;
 		int shouldHaveB = 15;
@@ -1272,7 +1439,7 @@ public class InventoryTest {
     @Test
     public void refillSingleStockWithConcurrentOrder(){
     	// given
-		int onHand = 10;
+		int onHand = 8;
 		int shouldHave = 16;
 		int onOrder = 3;
 		boolean isRestricted = false;
@@ -1620,8 +1787,8 @@ public class InventoryTest {
     @Test
     public void refillMultipleSaleStockWithConcurrentOrder(){
     	// given
-		int onHandA = 30;
-		int onHandB = 30;
+		int onHandA = 20;
+		int onHandB = 20;
 		int shouldHaveA = 15;
 		int shouldHaveB = 15;
 		boolean isRestricted = false;
@@ -1673,8 +1840,8 @@ public class InventoryTest {
     @Test
     public void refillMixStockSaleAndRegularWithConcurrentOrder(){
     	// given
-		int onHandA = 30;
-		int onHandB = 14;
+		int onHandA = 20;
+		int onHandB = 4;
 		int shouldHaveA = 15;
 		int shouldHaveB = 18;
 		boolean isRestricted = false;
@@ -1808,9 +1975,9 @@ public class InventoryTest {
     @Test
     public void refillMultipleSeasonalStockWithConcurrentOrder(){
     	// given
-		int onHandA = 37;
+		int onHandA = 17;
 		int shouldHaveA = 20;
-		int onHandB = 21;
+		int onHandB = 11;
 		int shouldHaveB = 15;
 		final Season season = Season.Summer;
 		final boolean isRestricted = false;
@@ -1861,9 +2028,9 @@ public class InventoryTest {
     @Test
     public void refillMixStockSeasonalAndRegularWithConcurrentOrder(){
     	// given
-		int onHandA = 37;
+		int onHandA = 17;
 		int shouldHaveA = 20;
-		int onHandB = 10;
+		int onHandB = 8;
 		int shouldHaveB = 15;
 		final Season seasonA = Season.Summer;
 		boolean isRestricted = false;
@@ -1914,9 +2081,9 @@ public class InventoryTest {
     @Test
     public void refillMixStockSeasonalAndSaleWithConcurrentOrder(){
     	// given
-		int onHandA = 37;
+		int onHandA = 17;
 		int shouldHaveA = 20;
-		int onHandB = 10;
+		int onHandB = 8;
 		int shouldHaveB = 15;
 		final Season season = Season.Summer;
 		boolean isRestricted = false;
@@ -2010,7 +2177,7 @@ public class InventoryTest {
     @Test
     public void refillSeasonalOnSaleStockWithSeasonRefillHigherWithConcurrentOrder(){
     	// given
-		int onHand = 22;
+		int onHand = 12;
 		int shouldHave = 25;
 		final boolean isRestricted = false;
 		final Season season = Season.Summer;
@@ -2093,7 +2260,7 @@ public class InventoryTest {
     @Test
     public void refillDateRestrictedRegularStockWithConcurrentOrder(){
     	// given
-		int onHand = 22;
+		int onHand = 18;
 		int shouldHave = 25;
 		boolean isRestricted = true;
 		int bulkAmt = 1;
@@ -2134,8 +2301,8 @@ public class InventoryTest {
     @Test
     public void refillMultipleDateRestrictedRegularStockWithConcurrentOrder(){
     	// given
-		int onHandA = 20;
-		int onHandB = 10;
+		int onHandA = 12;
+		int onHandB = 5;
 		int shouldHaveA = 25;
 		int shouldHaveB = 15;
 		boolean isRestricted = true;
