@@ -26,7 +26,7 @@ public class StockedItem implements Item {
 		final int increasedStock = (int) (Math.ceil(wantOnHand * 1.10));
 		int deficit = 0;
 		int toOrder = 0;
-
+		
 		if (onHand == 0){
 			db.setRequiredOnHand(this, increasedStock);	
 		}

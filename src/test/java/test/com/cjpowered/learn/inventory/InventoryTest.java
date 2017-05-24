@@ -2,6 +2,7 @@ package test.com.cjpowered.learn.inventory;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import com.cjpowered.learn.inventory.InventoryDatabase;
 import com.cjpowered.learn.inventory.InventoryManager;
@@ -2891,7 +2893,9 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		
+		InventoryDatabase db = mock(FakeDatabase.class, withSettings()
+				.useConstructor(store, currOrders).defaultAnswer(CALLS_REAL_METHODS));
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2912,9 +2916,7 @@ public class InventoryTest {
     	final List<Order> actualOrders = im.getOrders(today);
 		    	
     	// then
-	    assertEquals(1, actualOrders.size());
-	    assertEquals(10, actualOrders.get(0).quantity);
-	    assertEquals(item, actualOrders.get(0).item);
+    	Mockito.verify(db).setRequiredOnHand(item, 11);
     }
     
     @Test
@@ -2934,7 +2936,9 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		
+		InventoryDatabase db = mock(FakeDatabase.class, withSettings()
+				.useConstructor(store, currOrders).defaultAnswer(CALLS_REAL_METHODS));
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2955,9 +2959,7 @@ public class InventoryTest {
     	final List<Order> actualOrders = im.getOrders(today);
 		    	
     	// then
-	    assertEquals(1, actualOrders.size());
-	    assertEquals(20, actualOrders.get(0).quantity);
-	    assertEquals(item, actualOrders.get(0).item);
+    	Mockito.verify(db).setRequiredOnHand(item, 11);
     }
     
     @Test
@@ -2968,7 +2970,7 @@ public class InventoryTest {
 		boolean isRestricted = false;
 		int bulkAmt = 1;
 		int onOrder = 0;
-
+		
 		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
 		
 		final HashMap<Item, Integer> store = new HashMap<>();
@@ -2976,8 +2978,10 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
 		
+		InventoryDatabase db = mock(FakeDatabase.class, withSettings()
+				.useConstructor(store, currOrders).defaultAnswer(CALLS_REAL_METHODS));
+	
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
 			public boolean onSale(Item item) {
@@ -2997,9 +3001,7 @@ public class InventoryTest {
     	final List<Order> actualOrders = im.getOrders(today);
 		    	
     	// then
-	    assertEquals(1, actualOrders.size());
-	    assertEquals(30, actualOrders.get(0).quantity);
-	    assertEquals(item, actualOrders.get(0).item);
+    	Mockito.verify(db).setRequiredOnHand(item, 11);
     }
 }
 
