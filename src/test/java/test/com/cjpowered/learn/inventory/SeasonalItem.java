@@ -32,6 +32,11 @@ public class SeasonalItem implements Item{
 		final int deficit;
 		int toOrder = 0;
 		final int onOrder = db.onOrder(this);
+		final int increasedStock = (int)(Math.ceil(wantOnHand * 1.1));
+		
+		if (onHand == 0){
+			db.setRequiredOnHand(this, increasedStock);	
+		}
 		
 		if (isRestricted){
 			if(when.getDayOfMonth() != 1){

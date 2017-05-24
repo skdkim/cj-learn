@@ -7,7 +7,7 @@ import com.cjpowered.learn.marketing.MarketingInfo;
 
 public class StockedItem implements Item {
 	
-	private final int wantOnHand;
+	public final int wantOnHand;
 	private final boolean isRestricted;
 	private final int bulkAmt;
 	
@@ -25,6 +25,11 @@ public class StockedItem implements Item {
 		final boolean onSale = marketInfo.onSale(this);
 		int toOrder = 0;
 		final int onOrder = db.onOrder(this);
+		final int increasedStock = (int) (Math.ceil(wantOnHand * 1.10));
+		
+		if (onHand == 0){
+			db.setRequiredOnHand(this, increasedStock);	
+		}
 		
 		if (isRestricted){
 			if(when.getDayOfMonth() != 1){
