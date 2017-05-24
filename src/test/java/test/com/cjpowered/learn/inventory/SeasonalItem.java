@@ -29,11 +29,11 @@ public class SeasonalItem implements Item{
 		final int onHand = db.onHand(this);
 		final boolean inSeason = season.equals(marketInfo.season(when));
 		final boolean onSale = marketInfo.onSale(this);
-		final int deficit;
-		int toOrder = 0;
 		final int onOrder = db.onOrder(this);
 		final int increasedStock = (int)(Math.ceil(wantOnHand * 1.1));
-		
+		int deficit = 0;
+		int toOrder = 0;
+
 		if (onHand == 0){
 			db.setRequiredOnHand(this, increasedStock);	
 		}
@@ -45,23 +45,18 @@ public class SeasonalItem implements Item{
 		}
 		
 		if (inSeason && !onSale){
-			
 			deficit = wantOnHand * 2 - onHand - onOrder;
-			if (db.onHand(this) + db.onOrder(this) <= (wantOnHand * 2) * 0.8  ){
-				while (toOrder < deficit && toOrder + bulkAmt <= deficit){
-					toOrder += bulkAmt;
-				}
-			}
+			
 		} else if (inSeason && onSale){
 			deficit = wantOnHand < 20 ? wantOnHand + 20 - onHand - onOrder: wantOnHand * 2 - onHand - onOrder;
-			if (db.onHand(this) + db.onOrder(this) <= (deficit + onOrder) * 0.8  ){
-				while (toOrder < deficit && toOrder + bulkAmt <= deficit){
-					toOrder += bulkAmt;
-				}
+ 		}
+		
+		if (db.onHand(this) + db.onOrder(this) <= (deficit + onHand + onOrder) * 0.8  ){
+			while (toOrder < deficit && toOrder + bulkAmt <= deficit){
+				toOrder += bulkAmt;
 			}
- 		} else {
-			toOrder = wantOnHand - onHand - onOrder;
 		}
+		
 		maybeOrder = new Order(this, toOrder);
 		return maybeOrder;
 	}

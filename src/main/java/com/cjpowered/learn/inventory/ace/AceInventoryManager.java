@@ -17,7 +17,7 @@ public final class AceInventoryManager implements InventoryManager {
 	private final InventoryDatabase database;
 	private final MarketingInfo marketInfo;
 	
-	public AceInventoryManager(InventoryDatabase database, MarketingInfo marketInfo){
+	public AceInventoryManager(final InventoryDatabase database, final MarketingInfo marketInfo){
 		this.database = database;
 		this.marketInfo = marketInfo;
 	}

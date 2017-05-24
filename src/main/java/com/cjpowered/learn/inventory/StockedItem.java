@@ -7,11 +7,11 @@ import com.cjpowered.learn.marketing.MarketingInfo;
 
 public class StockedItem implements Item {
 	
-	public final int wantOnHand;
+	private final int wantOnHand;
 	private final boolean isRestricted;
 	private final int bulkAmt;
 	
-	public StockedItem(int wantOnHand, final boolean isRestricted, final int bulkAmt){
+	public StockedItem(final int wantOnHand, final boolean isRestricted, final int bulkAmt){
 		this.wantOnHand = wantOnHand;
 		this.isRestricted = isRestricted;
 		this.bulkAmt = bulkAmt;
@@ -21,12 +21,12 @@ public class StockedItem implements Item {
 	public Order createOrder(final LocalDate when, final InventoryDatabase db, final MarketingInfo marketInfo) {
 		final Order maybeOrder;
 		final int onHand = db.onHand(this);
-		final int deficit;
 		final boolean onSale = marketInfo.onSale(this);
-		int toOrder = 0;
 		final int onOrder = db.onOrder(this);
 		final int increasedStock = (int) (Math.ceil(wantOnHand * 1.10));
-		
+		int deficit = 0;
+		int toOrder = 0;
+
 		if (onHand == 0){
 			db.setRequiredOnHand(this, increasedStock);	
 		}
@@ -39,18 +39,14 @@ public class StockedItem implements Item {
 
 		if (onSale){
 			deficit = wantOnHand + 20 - onHand - onOrder;
-			if (db.onHand(this) + db.onOrder(this) <= (wantOnHand + 20) * 0.8  ){
-				while(toOrder < deficit  && toOrder + bulkAmt <= deficit){
-					toOrder += bulkAmt;
-				}				
-			}
 		} else {
 			deficit = wantOnHand - onHand - onOrder;
-			if (db.onHand(this) + db.onOrder(this) <= (wantOnHand) * 0.8 ){
-				while(toOrder < deficit && toOrder + bulkAmt <= deficit){
-					toOrder += bulkAmt;
-				}			
-			}
+		}
+		
+		if (db.onHand(this) + db.onOrder(this) <= (deficit + onHand + onOrder) * 0.8 ){
+			while(toOrder < deficit && toOrder + bulkAmt <= deficit){
+				toOrder += bulkAmt;
+			}			
 		}
 
 		maybeOrder = new Order(this, toOrder);
