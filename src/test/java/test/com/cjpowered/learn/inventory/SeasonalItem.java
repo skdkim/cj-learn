@@ -51,7 +51,7 @@ public class SeasonalItem implements Item{
 			deficit = wantOnHand < 20 ? wantOnHand + 20 - onHand - onOrder: wantOnHand * 2 - onHand - onOrder;
  		}
 		
-		if (db.onHand(this) + db.onOrder(this) <= (deficit + onHand + onOrder) * 0.8  ){
+		if (onHand + onOrder <= (deficit + onHand + onOrder) * 0.8  ){
 			while (toOrder < deficit && toOrder + bulkAmt <= deficit){
 				toOrder += bulkAmt;
 			}

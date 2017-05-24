@@ -43,7 +43,7 @@ public class StockedItem implements Item {
 			deficit = wantOnHand - onHand - onOrder;
 		}
 		
-		if (db.onHand(this) + db.onOrder(this) <= (deficit + onHand + onOrder) * 0.8 ){
+		if (onHand + onOrder <= (deficit + onHand + onOrder) * 0.8 ){
 			while(toOrder < deficit && toOrder + bulkAmt <= deficit){
 				toOrder += bulkAmt;
 			}			
