@@ -2956,7 +2956,49 @@ public class InventoryTest {
 		    	
     	// then
 	    assertEquals(1, actualOrders.size());
-	    assertEquals(10, actualOrders.get(0).quantity);
+	    assertEquals(20, actualOrders.get(0).quantity);
+	    assertEquals(item, actualOrders.get(0).item);
+    }
+    
+    @Test
+    public void increaseSaleStockLevelOnStockOutage(){
+    	// given
+		int onHand = 0;
+		int shouldHave = 10;
+		boolean isRestricted = false;
+		int bulkAmt = 1;
+		int onOrder = 0;
+
+		Item item = new StockedItem(shouldHave, isRestricted, bulkAmt);
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(item, onHand);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		
+		final MarketingInfo mrktInfo = new MarketingTemplate(){
+			@Override
+			public boolean onSale(Item item) {
+				return true;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Summer;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.of(2017, 1, 1);
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		    	
+    	// then
+	    assertEquals(1, actualOrders.size());
+	    assertEquals(30, actualOrders.get(0).quantity);
 	    assertEquals(item, actualOrders.get(0).item);
     }
 }
