@@ -2913,7 +2913,7 @@ public class InventoryTest {
 		final LocalDate today = LocalDate.of(2017, 1, 1);
 	
     	// when
-    	final List<Order> actualOrders = im.getOrders(today);
+    	im.getOrders(today);
 		    	
     	// then
     	Mockito.verify(db).setRequiredOnHand(item, 11);
@@ -2956,7 +2956,7 @@ public class InventoryTest {
 		final LocalDate today = LocalDate.of(2017, 1, 1);
 	
     	// when
-    	final List<Order> actualOrders = im.getOrders(today);
+    	im.getOrders(today);
 		    	
     	// then
     	Mockito.verify(db).setRequiredOnHand(item, 11);
@@ -2998,7 +2998,7 @@ public class InventoryTest {
 		final LocalDate today = LocalDate.of(2017, 1, 1);
 	
     	// when
-    	final List<Order> actualOrders = im.getOrders(today);
+    	im.getOrders(today);
 		    	
     	// then
     	Mockito.verify(db).setRequiredOnHand(item, 11);
