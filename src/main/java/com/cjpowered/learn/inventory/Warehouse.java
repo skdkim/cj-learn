@@ -4,7 +4,7 @@ public enum Warehouse {
 
     Poughkeepsie, Ashford, Zzyzx, Peculiar;
 
-    static Warehouse home() {
+    public static Warehouse home() {
         return Poughkeepsie;
     }
 }

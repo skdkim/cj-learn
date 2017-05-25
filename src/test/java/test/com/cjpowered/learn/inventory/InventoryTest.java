@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Test;
@@ -84,7 +85,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 
@@ -127,7 +128,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 
@@ -314,7 +315,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(itemA, onOrder);
 		currOrders.put(itemB, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -453,7 +454,7 @@ public class InventoryTest {
 		store.put(item, onHand);
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -493,7 +494,7 @@ public class InventoryTest {
 		store.put(item, onHand);
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -634,7 +635,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(itemA, onOrder);
 		currOrders.put(itemB, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -730,7 +731,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(itemA, 0);
 		currOrders.put(itemB, 0);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -776,7 +777,7 @@ public class InventoryTest {
 		store.put(item, onHand);
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -817,7 +818,7 @@ public class InventoryTest {
 		store.put(item, onHand);
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -857,7 +858,7 @@ public class InventoryTest {
 		
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -903,7 +904,7 @@ public class InventoryTest {
 		currOrders.put(itemA, onOrder);
 		currOrders.put(itemB, onOrder);
 		
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -956,7 +957,7 @@ public class InventoryTest {
 		currOrders.put(itemA, onOrder);
 		currOrders.put(itemB, onOrder);
 		
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1009,7 +1010,7 @@ public class InventoryTest {
 		currOrders.put(itemA, onOrder);
 		currOrders.put(itemB, onOrder);
 		
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1057,7 +1058,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1100,7 +1101,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1142,7 +1143,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1182,7 +1183,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1228,7 +1229,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(itemA, onOrder);
 		currOrders.put(itemB, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1275,7 +1276,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1318,7 +1319,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1360,7 +1361,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1408,7 +1409,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(itemA, onOrder);
 		currOrders.put(itemB, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1456,7 +1457,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 
@@ -1498,7 +1499,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 
@@ -1539,7 +1540,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1585,7 +1586,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(itemA, onOrderA);
 		currOrders.put(itemB, onOrderB);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1637,7 +1638,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(itemA, onOrderA);
 		currOrders.put(itemB, onOrderB);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1685,7 +1686,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(itemA, onOrderA);
 		currOrders.put(itemB, onOrderB);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1724,7 +1725,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1764,7 +1765,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1810,7 +1811,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(itemA, onOrderA);
 		currOrders.put(itemB, onOrderB);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1862,7 +1863,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(itemA, onOrderA);
 		currOrders.put(itemB, onOrderB);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 			@Override
@@ -1909,7 +1910,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1952,7 +1953,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -1998,7 +1999,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(itemA, onOrderA);
 		currOrders.put(itemB, onOrderB);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2051,7 +2052,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(itemA, onOrderA);
 		currOrders.put(itemB, onOrderB);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2104,7 +2105,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(itemA, onOrderA);
 		currOrders.put(itemB, onOrderB);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2152,7 +2153,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2195,7 +2196,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2237,7 +2238,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2277,7 +2278,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2324,7 +2325,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(itemA, onOrderA);
 		currOrders.put(itemB, onOrderB);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2371,7 +2372,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2414,7 +2415,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2456,7 +2457,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2498,7 +2499,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2547,7 +2548,7 @@ public class InventoryTest {
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(itemA, onOrderA);
 		currOrders.put(itemB, onOrderB);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2595,7 +2596,7 @@ public class InventoryTest {
 		store.put(item, onHand);
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2638,7 +2639,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2681,7 +2682,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2725,7 +2726,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2767,7 +2768,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2810,7 +2811,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -2853,7 +2854,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingTemplate(){
 			@Override
@@ -3026,7 +3027,7 @@ public class InventoryTest {
 
 		final HashMap<Item, Integer> currOrders = new HashMap<>();
 		currOrders.put(item, onOrder);
-		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
 		
 		final MarketingInfo mrktInfo = new MarketingInfo(){
 
@@ -3051,6 +3052,71 @@ public class InventoryTest {
 	    assertEquals(1, actualOrders.size());
 	    assertEquals(item, actualOrders.get(0).item);
 	    assertEquals(shouldHave - onHand, actualOrders.get(0).quantity);
+    }
+    
+    private InventoryDatabase fakeDatabaseForDefaultWarehouse(final Map<Item, Integer> dataStore, final Map<Item, Integer> onOrder){
+    	Map<Warehouse, Map<Item, Integer>> allData = new HashMap<>();
+    	allData.put(Warehouse.home(), dataStore);
+    	
+    	return new FakeDatabase(allData, onOrder);
+    }
+
+    
+    @Test
+    public void refillSingleStockFromMultipleNonDefaultWarehouse(){
+    	// given
+		int onHandA = 10;
+		int onHandB = 9;
+		int shouldHaveA = 16;
+		int shouldHaveB = 12; 
+		boolean isRestricted = false;
+		int bulkAmt = 1;
+		int onOrder = 0;
+		Warehouse warehouseA = Warehouse.Ashford;
+		Warehouse warehouseB = Warehouse.Peculiar;
+		
+		final HashMap<Warehouse, Integer> warehouseReqs = new HashMap<>();
+		warehouseReqs.put(warehouseA, shouldHaveA);
+		warehouseReqs.put(warehouseB, shouldHaveB);
+		
+		Item item = new StockedItem(warehouseReqs, isRestricted, bulkAmt);
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(item, onHandA);
+		store.put(item, onHandB);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = fakeDatabaseForDefaultWarehouse(store, currOrders);
+		
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+
+			@Override
+			public boolean onSale(Item item) {
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Spring;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.now();
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(2, actualOrders.size());
+	    
+		final Order expectedOrderA = new Order(item, 6, warehouseA);
+		final Order expectedOrderB = new Order(item, 3, warehouseB);
+		HashSet<Order> expected = new HashSet<>();
+		expected.add(expectedOrderA);
+		expected.add(expectedOrderB);
+		assertEquals(expected, new HashSet<>(actualOrders));
     }
 }
 

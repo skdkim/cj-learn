@@ -1,6 +1,7 @@
 package test.com.cjpowered.learn.inventory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,10 +12,10 @@ import com.cjpowered.learn.inventory.Warehouse;
 
 public class FakeDatabase implements InventoryDatabase{
 
-	private final Map<Item, Integer> dataStore;
+	private final Map<Warehouse, Map<Item, Integer>> dataStore;
 	private final Map<Item, Integer> onOrder;
 	
-	public FakeDatabase(final Map<Item, Integer> dataStore, final Map<Item, Integer> onOrder){
+	public FakeDatabase(final Map<Warehouse, Map<Item, Integer>> dataStore, final Map<Item, Integer> onOrder){
 		this.dataStore = dataStore;
 		this.onOrder = onOrder;
 	}
