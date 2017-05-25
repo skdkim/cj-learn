@@ -19,6 +19,7 @@ import com.cjpowered.learn.inventory.InventoryDatabase;
 import com.cjpowered.learn.inventory.InventoryManager;
 import com.cjpowered.learn.inventory.Item;
 import com.cjpowered.learn.inventory.Order;
+import com.cjpowered.learn.inventory.SeasonalItem;
 import com.cjpowered.learn.inventory.StockedItem;
 import com.cjpowered.learn.inventory.ace.AceInventoryManager;
 import com.cjpowered.learn.marketing.MarketingInfo;

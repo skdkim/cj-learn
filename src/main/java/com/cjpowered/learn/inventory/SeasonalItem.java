@@ -1,11 +1,8 @@
-package test.com.cjpowered.learn.inventory;
+package com.cjpowered.learn.inventory;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
-import com.cjpowered.learn.inventory.InventoryDatabase;
-import com.cjpowered.learn.inventory.Item;
-import com.cjpowered.learn.inventory.Order;
 import com.cjpowered.learn.marketing.MarketingInfo;
 import com.cjpowered.learn.marketing.Season;
 
