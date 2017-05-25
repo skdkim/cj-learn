@@ -21,6 +21,7 @@ import com.cjpowered.learn.inventory.Item;
 import com.cjpowered.learn.inventory.Order;
 import com.cjpowered.learn.inventory.SeasonalItem;
 import com.cjpowered.learn.inventory.StockedItem;
+import com.cjpowered.learn.inventory.Warehouse;
 import com.cjpowered.learn.inventory.ace.AceInventoryManager;
 import com.cjpowered.learn.marketing.MarketingInfo;
 import com.cjpowered.learn.marketing.Season;
@@ -3004,5 +3005,54 @@ public class InventoryTest {
     	// then
     	Mockito.verify(db).setRequiredOnHand(item, 11);
     }
+    
+    @Test
+    public void refillSingleStockFromSingleNonDefaultWarehouse(){
+    	// given
+		int onHand = 10;
+		int shouldHave = 16;
+		boolean isRestricted = false;
+		int bulkAmt = 1;
+		int onOrder = 0;
+		Warehouse warehouse = Warehouse.Ashford;
+		
+		final HashMap<Warehouse, Integer> warehouseReqs = new HashMap<>();
+		warehouseReqs.put(warehouse, shouldHave);
+		
+		Item item = new StockedItem(warehouseReqs, isRestricted, bulkAmt);
+		
+		final HashMap<Item, Integer> store = new HashMap<>();
+		store.put(item, onHand);
+
+		final HashMap<Item, Integer> currOrders = new HashMap<>();
+		currOrders.put(item, onOrder);
+		final InventoryDatabase db = new FakeDatabase(store, currOrders);
+		
+		final MarketingInfo mrktInfo = new MarketingInfo(){
+
+			@Override
+			public boolean onSale(Item item) {
+				return false;
+			}
+
+			@Override
+			public Season season(LocalDate when) {
+				return Season.Spring;
+			}
+		};
+		
+		final InventoryManager im = new AceInventoryManager(db, mrktInfo);
+		final LocalDate today = LocalDate.now();
+	
+    	// when
+    	final List<Order> actualOrders = im.getOrders(today);
+		
+    	// then
+	    assertEquals(1, actualOrders.size());
+	    assertEquals(item, actualOrders.get(0).item);
+	    assertEquals(shouldHave - onHand, actualOrders.get(0).quantity);
+    }
 }
+
+
 

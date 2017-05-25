@@ -17,9 +17,20 @@ public final class Order {
      */
     public final int quantity;
 
-    public Order(final Item item, final int quantity) {
-        this.item = item;
+      /**
+       * warehouse to which units should be shipped
+       */
+      public final Warehouse warehouse;
+  
+     public Order(final Item item, final int quantity, final Warehouse warehouse) {
+     this.item = item;
         this.quantity = quantity;
+	    this.warehouse = warehouse;
+	 }
+   
+       @Deprecated
+       public Order(final Item item, final int quantity) {
+           this(item, quantity, Warehouse.home());
     }
 
     @Override
@@ -27,12 +38,12 @@ public final class Order {
         if (this == obj)
             return true;
         else if (obj instanceof Order)
-            return this.item.equals(((Order) obj).item) && this.quantity == ((Order) obj).quantity;
-        return false;
+            return this.item.equals(((Order) obj).item) && this.quantity == ((Order) obj).quantity
+                    && this.warehouse == ((Order) obj).warehouse;        return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.item, this.quantity);
+       return Objects.hash(this.item, this.quantity, this.warehouse);
     }
 }

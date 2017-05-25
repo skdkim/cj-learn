@@ -1,24 +1,48 @@
 package com.cjpowered.learn.inventory;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import com.cjpowered.learn.marketing.MarketingInfo;
 
 public class StockedItem implements Item {
 	
-	private final int wantOnHand;
+	private final HashMap<Warehouse, Integer> warehouseWantOnHand;
 	private final boolean isRestricted;
 	private final int bulkAmt;
 	
 	public StockedItem(final int wantOnHand, final boolean isRestricted, final int bulkAmt){
-		this.wantOnHand = wantOnHand;
+		HashMap<Warehouse, Integer> defaultWantOnHand = new HashMap<Warehouse, Integer>();
+		defaultWantOnHand.put(Warehouse.home(), wantOnHand);
+		this.warehouseWantOnHand = defaultWantOnHand;
 		this.isRestricted = isRestricted;
 		this.bulkAmt = bulkAmt;
+	}
+	
+	public StockedItem(final HashMap warehouseWantOnHand, final boolean isRestricted, final int bulkAmt){
+		this.warehouseWantOnHand = warehouseWantOnHand;
+		this.isRestricted = isRestricted;
+		this.bulkAmt = bulkAmt;
+		
+//		int a = 1;
+//		Integer x = new Integer(a);
+//		
+//		int z = x.intValue();
 	}
 
 	@Override
 	public Order createOrder(final LocalDate when, final InventoryDatabase db, final MarketingInfo marketInfo) {
+		int wantOnHand = 0;
+		for (Map.Entry<Warehouse, Integer> next : warehouseWantOnHand.entrySet()){
+			wantOnHand = next.getValue();
+		}
+		
+//		for(Warehouse warehouse : warehouseWantOnHand.keySet()){
+//			Integer onHand = warehouseWantOnHand.get(warehouse);
+//		}
+		
 		final Order maybeOrder;
 		final int onHand = db.onHand(this);
 		final boolean onSale = marketInfo.onSale(this);

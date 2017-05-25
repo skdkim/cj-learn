@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.cjpowered.learn.inventory.InventoryDatabase;
 import com.cjpowered.learn.inventory.Item;
+import com.cjpowered.learn.inventory.Warehouse;
 
 public class FakeDatabase implements InventoryDatabase{
 
@@ -39,5 +40,23 @@ public class FakeDatabase implements InventoryDatabase{
 	@Override
 	public void setRequiredOnHand(Item item, int newAmount) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public int onOrder(Item item, Warehouse warehouse) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setRequiredOnHand(Item item, Warehouse warehouse, int newAmount) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int onHand(Item item, Warehouse warehouse) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
